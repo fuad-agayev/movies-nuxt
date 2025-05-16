@@ -20,6 +20,6 @@
     "vue3-carousel": "^0.15.1"
   },
   "devDependencies": {
-    "nuxt-icon": "^1.0.0-beta.7"
+    "@nuxt/icon": "^1.12.0"
   }
 }

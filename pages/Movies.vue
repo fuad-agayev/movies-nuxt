@@ -1,7 +1,7 @@
 <template>
-  <h1 class="bg-indigo-400"> Movies </h1>
+  <h1 class="bg-indigo-400"> movies </h1>
   <Home />
 </template>
-<script setup lang="ts" name="Movies">
+<script setup lang="ts">
 import Home from '@/components/Home.vue'
 </script>

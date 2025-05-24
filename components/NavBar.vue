@@ -15,7 +15,7 @@
                          Home </NuxtLink>
                     <NuxtLink to="/tv-shows" class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray" exact-active-class="font-bold">
                          Tv Shows </NuxtLink>
-                    <NuxtLink to="/movie" class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray" exact-active-class="font-bold">
+                    <NuxtLink to="/movie/123" class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray" exact-active-class="font-bold">
                          Movies </NuxtLink>
                     <NuxtLink to="/my-list" class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray" exact-active-class="font-bold">
                          My List </NuxtLink>
@@ -48,10 +48,10 @@
 </template>
 
 <script setup lang="ts">
-   const scrolled = ref(false)
+   const scrolled = ref<boolean>(false)
    const colorMode = useColorMode()
-   const showSearch = ref(false)
-   const searchQuery = ref('')
+   const showSearch = ref<boolean>(false)
+   const searchQuery = ref<string>('')
 
    const toggleTheme = () => {
          colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';

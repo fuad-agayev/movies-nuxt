@@ -1,9 +1,9 @@
 <template>
-  <div class="relative w-full h-[70vh] overflow-hidden">
+  <div class="relative w-full h-[80vh] overflow-hidden">
            <!--     Background Image    -->
                 <div class="absolute inset-0 z-0">
-                       <img :src="backdropUrl" :alt="movie?.title || 'Featured Movie'" class="w-full h-full object-cover"/>
-                       <div class="absolute inset-0 bg-gradient-to-t from netflix-black via-netflix-black/80 to-transparent"></div>
+                       <img :src="backdropUrl" :alt="movie?.title || 'Featured Movie'" class="w-full h-[550px] object-cover"/>
+                       <div class="absolute inset-0 bg-gradient-to-t from-netflix-black via-netflix-black/80 to-transparent"></div>
                        <div class="absolute inset-0 bg-gradient-to-r from-netflix-black/90 to-transparent"></div>
                 </div>
 
@@ -21,8 +21,26 @@
                             <p class="text-sm md:text-base mb-6 line-clamp-3 md:line-clamp-4 text-gray-300"> {{ movie?.overview }} </p>
 
                             <div class="flex flex-wrap gap-3">
-                              <button class="bg-white text-black px-6 py-2 rounded-md flex items-center font-medium hover:bg-opacity-80 transition"><Icon name="mdi:play" size="1.25em" class="mr-2"/> Play </button>
-                              <button class="bg-gray-600 bg-opacity-70 text-white px-6 py-2 flex items-center rounded-md font-medium hover:bg-opacity-50 transition"><Icon name="mdi:information-outline" size="1.25em" class="mr-2"/> More Info</button>
+                              <div v-if="showPlayer" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+    <div class="w-full max-w-3xl aspect-video">
+      <iframe 
+        :src="`https://www.youtube.com/embed/${videoKey}?autoplay=1`" 
+        frameborder="0"
+        allow="autoplay; encrypted-media" 
+        allowfullscreen
+        class="w-full h-full"
+      ></iframe>
+    </div>
+  </div>
+                              <button @click="playMovie" class="bg-white text-black px-6 py-2 rounded-md flex items-center font-medium hover:bg-opacity-80 transition">
+                                <Icon name="mdi:play" size="1.25em" class="mr-2"/>
+                                 Play 
+                                </button>
+                              
+                              <button class="bg-gray-600 bg-opacity-70 text-white px-6 py-2 flex items-center rounded-md font-medium hover:bg-opacity-50 transition">
+                                <Icon name="mdi:information-outline" size="1.25em" class="mr-2"/>
+                                 More Info
+                                </button>
                             </div>
                       </div>
                 </div>
@@ -30,12 +48,31 @@
 </template>
 
 <script setup lang="ts">
-  const props = defineProps({
-  movie: {
-    type: Object,
-    default: () => ({})
+  
+
+  import type { Movie } from '~/types/movies';
+  
+  const { fetchVideo } = videoTmdb();
+  
+  const showPlayer = ref(false);
+  const videoKey = ref('');
+
+  const playMovie = async () => {
+       const res = await fetchVideo(`movie/${props.movie.id}/videos`);
+       const trailer = res.find((v:any) => v.type === 'Trailer' && v.site === 'YouTube');
+       if(trailer){
+             videoKey.value = trailer.key;
+             showPlayer.value = true;
+             console.log("Video value: ", trailer.key);
+       }
   }
-});
+ const props = withDefaults(defineProps<{
+  movie?: Movie;
+}>(), {
+  movie: () => ({} as Movie)
+}); 
+ 
+ 
        const config = useRuntimeConfig();
       // const config = useRuntimeConfig() as { public: { imageBaseUrl: string } }
 

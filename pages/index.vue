@@ -7,6 +7,14 @@ const trending = ref<Movie[]>([]);
 const popular = ref<Movie[]>([]);
 const topRated = ref<Movie[]>([]);
 const upcoming = ref<Movie[]>([]);
+const person = ref<Movie[]>([])
+
+
+
+const featuredMovie = computed(() => {
+  return trending.value[Math.floor(Math.random() * trending.value.length)] || null;
+});
+
 
 
 onMounted(async () => {
@@ -14,41 +22,52 @@ onMounted(async () => {
  popular.value = await fetchMovies('movie/popular');
  topRated.value = await fetchMovies('movie/top_rated');
  upcoming.value = await fetchMovies('movie/upcoming');
+ person.value = await fetchMovies('person/popular');
 })
 
 </script>
 
 <template>
   <div>
+    <HeroSection :movie="featuredMovie" />
+
     <h1 class="text-2xl font-bold">Trending Movies</h1>
-    <div class="grid grid-cols-8 gap-1 mt-4">
-      <div v-for="trend in trending" :key="trend.id">
-        <img :src="`${config.public.imageBaseUrl}/w500${trend.poster_path}`" :alt="trend.title" class="w-64 h-32 object-cover"/>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-24">
+      <div v-for="trend in trending" :key="trend.id" class="">
+        <img :src="`${config.public.imageBaseUrl}/w500${trend.poster_path}`" :alt="trend.title" class="w-full h-auto object-cover rounded-lg"/>
         <h2 class="text-lg font-semibold mt-2">{{ trend.title }}</h2>
       </div>
     </div>
 
      <h1 class="text-2xl font-bold">Popular Movies</h1>
-    <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
       <div v-for="pop in popular" :key="pop.id">
-        <img :src="`${config.public.imageBaseUrl}/w500${pop.poster_path}`" :alt="pop.title" />
+        <img :src="`${config.public.imageBaseUrl}/w500${pop.poster_path}`" :alt="pop.title" class="w-full h-auto object-cover rounded-lg"/>
         <h2 class="text-lg font-semibold mt-2">{{ pop.title }}</h2>
       </div>
     </div>
 
     <h1 class="text-2xl font-bold">Top rated Movies</h1>
-    <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
       <div v-for="top in topRated" :key="top.id">
-        <img :src="`${config.public.imageBaseUrl}/w500${top.poster_path}`" :alt="top.title" />
+        <img :src="`${config.public.imageBaseUrl}/w500${top.poster_path}`" :alt="top.title" class="w-full h-auto object-cover rounded-lg"/>
         <h2 class="text-lg font-semibold mt-2">{{ top.title }}</h2>
       </div>
     </div>
 
     <h1 class="text-2xl font-bold">Coming Movies</h1>
-    <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
       <div v-for="com in popular" :key="com.id">
-        <img :src="`${config.public.imageBaseUrl}/w500${com.poster_path}`" :alt="com.title" />
+        <img :src="`${config.public.imageBaseUrl}/w500${com.poster_path}`" :alt="com.title" class="w-full h-auto object-cover rounded-lg"/>
         <h2 class="text-lg font-semibold mt-2">{{ com.title }}</h2>
+      </div>
+    </div>
+
+    <h1 class="text-2xl font-bold">Person Movies</h1>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
+      <div v-for="per in person" :key="per.id">
+        <img :src="`${config.public.imageBaseUrl}/w500${per.profile_path}`" :alt="per.name" class="w-full h-auto object-cover rounded-lg"/>
+        <h2 class="text-lg font-semibold mt-2">{{ per.name }}</h2>
       </div>
     </div>
 

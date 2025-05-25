@@ -1,6 +1,8 @@
 export interface Movie {
   id: number;
   title: string;
+  name: string;
+  profile_path: string | null;
   overview: string;
   release_date: string;
   poster_path: string | null;

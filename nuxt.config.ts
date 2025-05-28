@@ -21,11 +21,12 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'NuFlix - Stream Movies and TV Shows',
+      titleTemplate: '%s | NuFlix',
       meta: [
         { name: 'description', content: 'A Netflix clone built with Nuxt 3' }
       ],
       link: [
-        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+        { rel: 'icon', type: 'image/png', href: 'images/troya.jpg' }
       ]
     }
   }

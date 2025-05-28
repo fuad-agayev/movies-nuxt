@@ -31,11 +31,39 @@ onMounted(async () => {
   <div>
     <HeroSection :movie="featuredMovie" />
 
+ <h1 class="text-2xl font-bold mb-4">Trending Movies</h1>
+
+<div class="flex gap-4 overflow-x-auto scroll-smooth pb-4">
+  <div
+    v-for="trend in trending"
+    :key="trend.id"
+    class="min-w-[200px] sm:min-w-[220px] scroll-item flex-shrink-0"
+  >
+    <NuxtLink :to="`/movie/${trend.id}`" class="block">
+      <img
+        :src="`${config.public.imageBaseUrl}/w500${trend.poster_path}`"
+        :alt="trend.title"
+        class="w-full h-[240px] object-cover rounded-lg shadow-md"
+      />
+      <h2 class="text-sm font-semibold mt-2 text-white truncate text-center">
+        {{ trend.title }}
+      </h2>
+    </NuxtLink>
+  </div>
+</div>
+
+
+    
+    
+
     <h1 class="text-2xl font-bold">Trending Movies</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-24">
       <div v-for="trend in trending" :key="trend.id" class="">
-        <img :src="`${config.public.imageBaseUrl}/w500${trend.poster_path}`" :alt="trend.title" class="w-full h-auto object-cover rounded-lg"/>
-        <h2 class="text-lg font-semibold mt-2">{{ trend.title }}</h2>
+        <NuxtLink :to="`/movie/${trend.id}`" class="block">
+          <img :src="`${config.public.imageBaseUrl}/w500${trend.poster_path}`" :alt="trend.title" class="w-full h-auto object-cover rounded-lg"/>
+          <h2 class="text-lg font-semibold mt-2">{{ trend.title }}</h2>
+        </NuxtLink>
+        
       </div>
     </div>
 
@@ -50,8 +78,10 @@ onMounted(async () => {
     <h1 class="text-2xl font-bold">Top rated Movies</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
       <div v-for="top in topRated" :key="top.id">
-        <img :src="`${config.public.imageBaseUrl}/w500${top.poster_path}`" :alt="top.title" class="w-full h-auto object-cover rounded-lg"/>
-        <h2 class="text-lg font-semibold mt-2">{{ top.title }}</h2>
+        <NuxtLink :to="`/movie/${top.id}`" class="block">
+             <img :src="`${config.public.imageBaseUrl}/w500${top.poster_path}`" :alt="top.title" class="w-full h-auto object-cover rounded-lg"/>
+            <h2 class="text-lg font-semibold mt-2">{{ top.title }}</h2>
+        </NuxtLink>
       </div>
     </div>
 
@@ -73,3 +103,32 @@ onMounted(async () => {
 
   </div>
 </template>
+<style scoped>
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #666 transparent;
+  padding-bottom: 6px;;
+}
+
+.scroll-container::-webkit-scrollbar{
+    height: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #666;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 100px;
+}
+</style>

@@ -7,7 +7,7 @@
                <div class="flex items-center gap-8">
                     <!--       LOGO       -->
                            <NuxtLink to="/" class="shrink-0">
-                                 <img src="/troya.jpg" alyt="Nuxt Film site logo" class="h-8 w-auto rounded"/>
+                                 <img src="/images/troya.jpg" alyt="Nuxt Film site logo" class="h-8 w-auto rounded"/>
                            </NuxtLink>
                    <!--       NAVIGATION       -->
               <nav class="hidden md:flex items-center gap-8">

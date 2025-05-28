@@ -21,23 +21,14 @@
                             <p class="text-sm md:text-base mb-6 line-clamp-3 md:line-clamp-4 text-gray-300"> {{ movie?.overview }} </p>
 
                             <div class="flex flex-wrap gap-3">
-                              <div v-if="showPlayer" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
-    <div class="w-full max-w-3xl aspect-video">
-      <iframe 
-        :src="`https://www.youtube.com/embed/${videoKey}?autoplay=1`" 
-        frameborder="0"
-        allow="autoplay; encrypted-media" 
-        allowfullscreen
-        class="w-full h-full"
-      ></iframe>
-    </div>
-  </div>
+                             
                               <button @click="playMovie" class="bg-white text-black px-6 py-2 rounded-md flex items-center font-medium hover:bg-opacity-80 transition">
                                 <Icon name="mdi:play" size="1.25em" class="mr-2"/>
                                  Play 
-                                </button>
-                              
-                              <button class="bg-gray-600 bg-opacity-70 text-white px-6 py-2 flex items-center rounded-md font-medium hover:bg-opacity-50 transition">
+                              </button>
+                                   <VideoModal  :shoow="showPlayer" :videoKey="videoKey" @close="showPlayer = false"/>
+                                   <InfoModal :showw="showInfo" :movie="selectedMovie" @click="showInfo = false"/>
+                              <button @click="openInfoModal(movie)" class="bg-gray-600 bg-opacity-70 text-white px-6 py-2 flex items-center rounded-md font-medium hover:bg-opacity-50 transition">
                                 <Icon name="mdi:information-outline" size="1.25em" class="mr-2"/>
                                  More Info
                                 </button>
@@ -49,30 +40,39 @@
 
 <script setup lang="ts">
   
-
-  import type { Movie } from '~/types/movies';
+  import VideoModal from './VideoModal.vue';
+  import InfoModal from './InfoModal.vue';
+  import type { Movie, Video } from '~/types/movies';
+  
   
   const { fetchVideo } = videoTmdb();
-  
   const showPlayer = ref(false);
   const videoKey = ref('');
+  const showInfo = ref(false);
+  const selectedMovie = ref(null);
 
   const playMovie = async () => {
        const res = await fetchVideo(`movie/${props.movie.id}/videos`);
-       const trailer = res.find((v:any) => v.type === 'Trailer' && v.site === 'YouTube');
+       const trailer = res.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
        if(trailer){
              videoKey.value = trailer.key;
              showPlayer.value = true;
              console.log("Video value: ", trailer.key);
        }
   }
+
+  const openInfoModal = (movie: any) => {
+      showInfo.value = true;
+      selectedMovie.value = movie;
+  }
+
  const props = withDefaults(defineProps<{
   movie?: Movie;
 }>(), {
   movie: () => ({} as Movie)
 }); 
  
- 
+
        const config = useRuntimeConfig();
       // const config = useRuntimeConfig() as { public: { imageBaseUrl: string } }
 

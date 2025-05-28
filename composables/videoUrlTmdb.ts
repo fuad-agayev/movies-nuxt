@@ -1,3 +1,6 @@
+import { useRuntimeConfig } from '#imports'
+
+
 export const videoTmdb = () => {
 
   const config = useRuntimeConfig();
@@ -9,7 +12,7 @@ export const videoTmdb = () => {
           api_key: config.public.apiKey
         }
       })
-      return response.results
+      return response
     } catch(error){
        console.error("API error: ", error)
     }

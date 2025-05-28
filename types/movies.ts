@@ -37,3 +37,8 @@ export interface ApiResponseVideo {
   id: number
   results: Video[]
 }
+
+interface Props {
+  title: string;
+  movies: Movie[];
+}

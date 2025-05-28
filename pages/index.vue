@@ -31,13 +31,15 @@ onMounted(async () => {
   <div>
     <HeroSection :movie="featuredMovie" />
 
- <h1 class="text-2xl font-bold mb-4">Trending Movies</h1>
+<h1 class="text-2xl font-bold mb-4">Trending Movies</h1>
 
-<div class="flex gap-4 overflow-x-auto scroll-smooth pb-4">
+<div
+  class="flex gap-2 overflow-x-auto scroll-snap-x scroll-snap-mandatory scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-transparent pb-2"
+>
   <div
     v-for="trend in trending"
     :key="trend.id"
-    class="min-w-[200px] sm:min-w-[220px] scroll-item flex-shrink-0"
+    class="min-w-[200px] sm:min-w-[220px] flex-shrink-0 scroll-snap-start"
   >
     <NuxtLink :to="`/movie/${trend.id}`" class="block">
       <img
@@ -51,6 +53,7 @@ onMounted(async () => {
     </NuxtLink>
   </div>
 </div>
+
 
 
     
@@ -119,16 +122,20 @@ onMounted(async () => {
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background-color: #666;
+  background: purple;
   border-radius: 4px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
   background: transparent;
 }
+.scroll-container::-webkit-scrollbar-corner
+ {
+  background: transparent;
+}
 .scroll-item {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  width: 100px;
+  width: 50px;
 }
 </style>

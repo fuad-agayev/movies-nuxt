@@ -42,3 +42,10 @@ interface Props {
   title: string;
   movies: Movie[];
 }
+
+export interface CarouselBreakpoints {
+  [key: number]: {
+    itemsToShow: number;
+    snapAlign: 'start' | 'center' | 'end';
+  };
+}

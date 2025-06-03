@@ -49,8 +49,7 @@ const navigateToMovie = () => {
       />
     </div>
 
-    <!-- Hover Content -->
-    <transition name="fade">
+   <transition name="fade">
       <div 
         v-if="isHovered" 
         class="absolute top-0 left-0 w-full h-full bg-netflix-dark bg-opacity-95 rounded-md flex flex-col p-3 z-30"
@@ -78,7 +77,7 @@ const navigateToMovie = () => {
           </div>
           
         </div>
-      </div>
+       </div>
     </transition>
   </div>
 </template>

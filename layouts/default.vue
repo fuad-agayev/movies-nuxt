@@ -2,7 +2,7 @@
   <div>
      <NavBar />
      <main class="pt-16">
-         <slot />
+     <slot />
      </main>
      <AppFooter />
   </div>

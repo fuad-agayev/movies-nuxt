@@ -29,7 +29,7 @@
             Home
           </NuxtLink>
           <NuxtLink
-            to="/movie/123"
+            to="/films"
             class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray"
             exact-active-class="font-bold"
           >
@@ -154,7 +154,7 @@
           Home
         </NuxtLink>
         <NuxtLink
-          to="/movie/123"
+          to="/films"
           class="text-base font-medium text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray transition-colors"
           exact-active-class="font-bold"
         >

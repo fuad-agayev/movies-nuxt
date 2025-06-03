@@ -4,11 +4,13 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useHead, useRuntimeConfig } from '#imports';
 import VideoModal from '~/components/VideoModal.vue';
 import CircularRating from '~/components/CircularRating.vue';
+import { useWatchListStore } from '~/stores/watchlist'
 
 const { fetchMovies } = useTmdb();
 const { fetchVideo } = videoTmdb();
 const route = useRoute();
 const config = useRuntimeConfig();
+const watchlistStore = useWatchListStore();
 
 const movie = ref<any>(null);
 const trailerKey = ref('');
@@ -34,8 +36,11 @@ onMounted(async () => {
 });
 
 const formatRuntime = (mins: number) => `${Math.floor(mins / 60)}h ${mins % 60}m`;
-const addToWatchlist = async (movieId: number) => {
-  console.log(`Film ${movieId} watchlist'e eklendi!`);
+
+//  Pinia Store  
+const addToWatchlist = async () => {
+  if(movie.value)
+  watchlistStore.addMovie(movie.value)
 };
 
 useHead(() => ({
@@ -48,6 +53,7 @@ useHead(() => ({
     { name: 'twitter:image', content: movie.value?.poster_path ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}` : '' },
   ]
 }));
+
 // BU OBJE DIR DINAMIKLIK SAGLAMAZ ONCE NE DEYER VERDINSE SABIR OLARAK ONU GOSTERIR
 //useHead({
  // title: movie.value?.title ? Film: ${movie.value.title} : 'Film Yükleniyor...'
@@ -55,6 +61,8 @@ useHead(() => ({
 </script>
 
 <template>
+  <div>
+
   <section class="text-white px-4 py-8 bg-cover bg-center relative overflow-hidden">
     <div class="absolute top-0 right-0 h-full w-3/5 bg-cover bg-center blur-sm opacity-30 scale-110 z-0"
          :style="movie?.backdrop_path ? `background-image: url(${config.public.imageBaseUrl}/original${movie.backdrop_path})` : ''"></div>
@@ -75,7 +83,7 @@ useHead(() => ({
             <Icon name="mdi:play" class="mr-2 text-3xl hover:bg-green-400" /> Play Trailer
           </button>
           <div class="relative group inline-block">
-            <button @click="addToWatchlist(movie.id)" class="p-2 rounded hover:bg-gray-700 transition-colors">
+            <button @click="addToWatchlist()" class="p-2 rounded hover:bg-gray-700 transition-colors">
               <Icon name="mdi:bookmark-outline" class="text-white text-2xl" />
             </button>
             <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded bg-gray-800 text-white text-xs opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
@@ -132,6 +140,7 @@ useHead(() => ({
   </div>
 </div>
 
+</div>
 </template>
 
 <style scope>

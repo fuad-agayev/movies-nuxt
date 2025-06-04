@@ -1,5 +1,4 @@
-
-import { useRuntimeConfig } from '#imports';
+import { useRuntimeConfig } from '#imports'
 
 export const useTmdb = () => {
   const config = useRuntimeConfig()
@@ -11,7 +10,7 @@ export const useTmdb = () => {
           api_key: config.public.apiKey
         }
       })
-      return res.results ?? res 
+      return res.results ?? res
     } catch (error) {
       console.error('API error:', error)
     }

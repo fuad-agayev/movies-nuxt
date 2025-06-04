@@ -1,10 +1,15 @@
-
 <template>
   <div class="relative w-full h-[50vh] overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
-      <img :src="backdropUrl" :alt="movie?.title || 'Featured Movie'" class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-t from-netflix-black via-netflix-black/80 to-transparent"></div>
+      <img
+        :src="backdropUrl"
+        :alt="movie?.title || 'Featured Movie'"
+        class="w-full h-full object-cover"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-netflix-black via-netflix-black/80 to-transparent"
+      ></div>
       <div class="absolute inset-0 bg-gradient-to-r from-netflix-black/90 to-transparent"></div>
     </div>
 
@@ -64,7 +69,7 @@ const props = withDefaults(
     movie?: Movie
   }>(),
   {
-    movie: () => ({} as Movie),
+    movie: () => ({}) as Movie
   }
 )
 
@@ -86,7 +91,7 @@ const backdropUrl = computed(() => {
     : ''
 })
 
-//  BOYLE DE YAPILA BILINIR ISTERSEN AYNI SEY 
+//  BOYLE DE YAPILA BILINIR ISTERSEN AYNI SEY
 /*
  const backdropUrl = computed(() => {
             if(!props.movie?.backdrop_path) return '';
@@ -96,18 +101,14 @@ const backdropUrl = computed(() => {
 */
 
 const getYear = computed(() => {
-  return props.movie?.release_date
-    ? new Date(props.movie.release_date).getFullYear()
-    : ''
+  return props.movie?.release_date ? new Date(props.movie.release_date).getFullYear() : ''
 })
 
 const playMovie = async () => {
   if (!props.movie?.id) return
 
   const res = await fetchVideo(`movie/${props.movie.id}/videos`)
-  const trailer = res.results.find(
-    (v: Video) => v.type === 'Trailer' && v.site === 'YouTube'
-  )
+  const trailer = res.results.find((v: Video) => v.type === 'Trailer' && v.site === 'YouTube')
 
   if (trailer) {
     videoKey.value = trailer.key
@@ -121,4 +122,3 @@ const openInfoModal = (movie: Movie) => {
   showInfo.value = true
 }
 </script>
-

@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia'
 import type { Movie } from '~/types/movies'
 
-
 export const useWatchListStore = defineStore('watchlist', {
   state: () => ({
     movies: [] as Movie[]
@@ -20,9 +19,7 @@ export const useWatchListStore = defineStore('watchlist', {
   persist: {
     storage: piniaPluginPersistedstate.localStorage()
   }
-
 })
-
 
 //* IF YOU DO NOT USE the `pinia-plugin-persistedstate` MODULE:
 //* You will need to handle localStorage manually, as shown below.

@@ -4,7 +4,9 @@
     @click.self="emit('close')"
     class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center px-4"
   >
-    <div class="relative w-full max-w-2xl aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
+    <div
+      class="relative w-full max-w-2xl aspect-video bg-black rounded-lg overflow-hidden shadow-lg"
+    >
       <!-- Close Button -->
       <button
         @click="emit('close')"
@@ -27,11 +29,11 @@
 
 <script setup lang="ts">
 defineProps<{
-  shoow: boolean;
-  videoKey: string;
-}>();
+  shoow: boolean
+  videoKey: string
+}>()
 
 const emit = defineEmits<{
-  (e: 'close'): void;
-}>();
+  (e: 'close'): void
+}>()
 </script>

@@ -1,4 +1,3 @@
-
 <template>
   <header
     class="fixed top-0 w-full z-50 transition-all duration-300"
@@ -12,11 +11,7 @@
       <div class="flex items-center gap-4 md:gap-8">
         <!-- LOGO -->
         <NuxtLink to="/" class="shrink-0">
-          <img
-            src="/images/troya.jpg"
-            alt="Nuxt Film site logo"
-            class="h-8 w-auto rounded"
-          />
+          <img src="/images/troya.jpg" alt="Nuxt Film site logo" class="h-8 w-auto rounded" />
         </NuxtLink>
 
         <!-- DESKTOP NAV -->
@@ -47,7 +42,7 @@
             to="/watchlist"
             class="text-sm text-white dark:text-netflix-black hover:text-netflix-light-gray dark:hover:text-netflix-gray"
             exact-active-class="font-bold"
-          > 
+          >
             Watchlist
           </NuxtLink>
         </nav>
@@ -66,12 +61,7 @@
             class="text-white dark:text-netflix-black"
             size="1.5em"
           />
-          <Icon
-            v-else
-            name="lucide:moon"
-            class="text-white dark:text-netflix-black"
-            size="1.5em"
-          />
+          <Icon v-else name="lucide:moon" class="text-white dark:text-netflix-black" size="1.5em" />
         </button>
 
         <!-- Search -->
@@ -110,33 +100,29 @@
         </div>
       -->
 
-      <div class="md:hidden flex items-center">
-    <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="p-2 text-white dark:text-netflix-black">
-      <svg
-        v-if="!isMobileMenuOpen"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        class="w-6 h-6"
-      >
-        <line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round" />
-        <line x1="3" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round" />
-      </svg>
+        <div class="md:hidden flex items-center">
+          <button
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
+            class="p-2 text-white dark:text-netflix-black"
+          >
+            <svg
+              v-if="!isMobileMenuOpen"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round" />
+              <line x1="3" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round" />
+            </svg>
 
-      <svg
-        v-else
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        class="w-6 h-6"
-      >
-        <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
-        <line x1="6" y1="18" x2="18" y2="6" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </button>
-  </div>
-
+            <svg v-else fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+              <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
+              <line x1="6" y1="18" x2="18" y2="6" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -181,56 +167,57 @@
 </template>
 
 <script setup lang="ts">
-const scrolled = ref(false);
-const colorMode = useColorMode();
-const showSearch = ref(false);
-const searchQuery = ref('');
-const isMobileMenuOpen = ref(false);
+const scrolled = ref(false)
+const colorMode = useColorMode()
+const showSearch = ref(false)
+const searchQuery = ref('')
+const isMobileMenuOpen = ref(false)
 
 const toggleTheme = () => {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
-};
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+}
 
 const toggleSearch = () => {
-  showSearch.value = !showSearch.value;
-};
+  showSearch.value = !showSearch.value
+}
 
 const performSearch = () => {
-  const query = searchQuery.value.trim();
+  const query = searchQuery.value.trim()
   if (query) {
-    navigateTo(`/search?query=${encodeURIComponent(query)}`);
-       // navigateTo(/search?q=${searchQuery.value.trim()});  boyle olsaydi mesela  ->>>>  hello world   2 sozun arasi bosluk dur  BU HATA veryor encodURIComponent bunu hallediyor 
-    showSearch.value = false;
+    navigateTo(`/search?query=${encodeURIComponent(query)}`)
+    // navigateTo(/search?q=${searchQuery.value.trim()});  boyle olsaydi mesela  ->>>>  hello world   2 sozun arasi bosluk dur  BU HATA veryor encodURIComponent bunu hallediyor
+    showSearch.value = false
   }
-};
+}
 
 const onScroll = () => {
-  scrolled.value = window.scrollY > 30;
-};
+  scrolled.value = window.scrollY > 30
+}
 
 const onClickOutside = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
+  const target = e.target as HTMLElement
   if (!target.closest('.relative')) {
-    showSearch.value = false;
+    showSearch.value = false
   }
-};
+}
 
 onMounted(() => {
-  window.addEventListener('scroll', onScroll);
-  window.addEventListener('click', onClickOutside);
-});
+  window.addEventListener('scroll', onScroll)
+  window.addEventListener('click', onClickOutside)
+})
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll);
-  window.removeEventListener('click', onClickOutside);
-});
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('click', onClickOutside)
+})
 </script>
-
 
 <style scoped>
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 .fade-slide-enter-from,
 .fade-slide-leave-to {

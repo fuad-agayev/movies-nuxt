@@ -7,7 +7,10 @@
     "dev": "cross-env HOST=0.0.0.0 nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint . --ext .js,.ts,.vue --fix",
+    "format": "prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nuxt/icon": "^1.13.0",
@@ -22,6 +25,11 @@
     "vue3-carousel": "^0.15.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^10.1.0",
+    "prettier": "^3.5.3",
+    "husky": "^8.0.0"
   }
 }

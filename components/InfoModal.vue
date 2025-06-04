@@ -4,7 +4,9 @@
     @click.self="$emit('close')"
     class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-4"
   >
-    <div class="relative bg-transparent text-white rounded-lg shadow-lg w-full max-w-2xl overflow-hidden border border-white/20">
+    <div
+      class="relative bg-transparent text-white rounded-lg shadow-lg w-full max-w-2xl overflow-hidden border border-white/20"
+    >
       <!-- Close Button -->
       <button
         @click="$emit('close')"
@@ -34,7 +36,6 @@
             <li><strong>Language:</strong> {{ movie.original_language }}</li>
             <li><strong>Popularity:</strong> {{ movie.popularity.toFixed(2) }}</li>
             <li><strong>Vote Count:</strong> {{ movie.vote_count }}</li>
-            
           </ul>
         </div>
       </div>
@@ -43,16 +44,14 @@
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig();
+const config = useRuntimeConfig()
 
 defineProps<{
-  showw: boolean;
-  movie: any;
-}>();
+  showw: boolean
+  movie: any
+}>()
 
 defineEmits<{
-  (e: 'close'): void;
-}>();
+  (e: 'close'): void
+}>()
 </script>
-
-

@@ -1,9 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 
-
 export const videoTmdb = () => {
-
-  const config = useRuntimeConfig();
+  const config = useRuntimeConfig()
 
   const fetchVideo = async (idVideo: string) => {
     try {
@@ -13,8 +11,8 @@ export const videoTmdb = () => {
         }
       })
       return response
-    } catch(error){
-       console.error("API error: ", error)
+    } catch (error) {
+      console.error('API error: ', error)
     }
   }
 

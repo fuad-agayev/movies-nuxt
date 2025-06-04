@@ -1,28 +1,26 @@
 export interface Movie {
-  id: number;
-  title: string;
-  name: string;
-  profile_path: string | null;
-  overview: string;
-  release_date: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  vote_average: number;
-  vote_count: number;
-  genre_ids: number[];
+  id: number
+  title: string
+  name: string
+  profile_path: string | null
+  overview: string
+  release_date: string
+  poster_path: string | null
+  backdrop_path: string | null
+  vote_average: number
+  vote_count: number
+  genre_ids: number[]
   [key: string]: any
+  type: 'movie' | 'tv'
 }
 
 export interface Video {
-  id: string;
-  type: string;
-  site: string;
-  key: string;
- name: string;
+  id: string
+  type: string
+  site: string
+  key: string
+  name: string
 }
-
-
-
 
 export interface ApiResponseList<T> {
   results: T[]
@@ -31,21 +29,19 @@ export interface ApiResponseList<T> {
   total_pages?: number
 }
 
-
-
 export interface ApiResponseVideo {
   id: number
   results: Video[]
 }
 
 interface Props {
-  title: string;
-  movies: Movie[];
+  title: string
+  movies: Movie[]
 }
 
 export interface CarouselBreakpoints {
   [key: number]: {
-    itemsToShow: number;
-    snapAlign: 'start' | 'center' | 'end';
-  };
+    itemsToShow: number
+    snapAlign: 'start' | 'center' | 'end'
+  }
 }

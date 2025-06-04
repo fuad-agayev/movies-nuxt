@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt','pinia-plugin-persistedstate/nuxt', '@nuxtjs/color-mode', '@nuxt/icon'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxt/icon'
+  ],
   colorMode: {
     preference: 'dark',
     classSuffix: '',
@@ -21,12 +27,8 @@ export default defineNuxtConfig({
     head: {
       title: 'NuFlix - Stream Movies and TV Shows',
       titleTemplate: '%s | NuFlix',
-      meta: [
-        { name: 'description', content: 'A Netflix clone built with Nuxt 3' }
-      ],
-      link: [
-        { rel: 'icon', type: 'image/png', href: 'images/troya.jpg' }
-      ]
+      meta: [{ name: 'description', content: 'A Netflix clone built with Nuxt 3' }],
+      link: [{ rel: 'icon', type: 'image/png', href: 'images/troya.jpg' }]
     }
   }
 })

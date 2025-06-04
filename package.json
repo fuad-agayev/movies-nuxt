@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ext .js,.ts,.vue --fix",
     "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "prepare": "husky install"
   },
   "dependencies": {

@@ -40,7 +40,7 @@ const carouselBreakpoints: CarouselBreakpoints = {
         snap-align="start"
       >
         <Slide v-for="movie in movies" :key="movie.id" class="px-1">
-          <FilmCard :movie="movie" class="" />
+          <FilmCard :movie="movie" />
         </Slide>
         <template #addons>
           <Navigation />

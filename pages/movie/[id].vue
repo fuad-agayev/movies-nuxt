@@ -45,7 +45,8 @@ const toggleFavorites = () => {
   favoritesStore.toggleFavorite(movie.value.id)
 }
 
-// Watchlist functionality
+// Watchlist functionality   
+// BU ISLEM FILMCARD daki gibi STOREDEN TOGGLE MOVIE ve ISINWATCHLIST GETIRMEKLE DE YAPMAK OLUR  BOYLEDE KALSIN DIYE SAKLADIM
 const inWatchlist = computed(() => watchlistStore.movies.some(item => item.id === movie.value?.id))
 
 const toggleWatchlist = () => {
@@ -251,10 +252,6 @@ useHead(() => ({
 </template>
 
 <style scoped>
-/* Add any custom styles here if needed */
-</style>
-
-<style scope>
 .loading-wave {
   display: flex;
   justify-content: center;

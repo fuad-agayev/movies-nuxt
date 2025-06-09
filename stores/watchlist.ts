@@ -12,8 +12,22 @@ export const useWatchListStore = defineStore('watchlist', {
         this.movies.push(movie)
       }
     },
+    
     removeMovie(movieId: number) {
       this.movies = this.movies.filter(m => m.id !== movieId)
+    },
+    
+    toggleMovie(movie: Movie) {
+      const exists = this.movies.some(m => m.id === movie.id)
+      if (exists) {
+        this.removeMovie(movie.id)
+      } else {
+        this.addMovie(movie)
+      }
+    },
+
+    isInWatchlist(movieId: number) {
+      return this.movies.some(m => m.id === movieId)
     }
   },
   persist: {

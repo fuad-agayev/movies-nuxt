@@ -3,10 +3,11 @@ import { ref, computed } from 'vue'
 import { useWatchListStore } from '~/stores/watchlist'
 import { useRuntimeConfig } from '#imports'
 import { useFavoritesStore } from '~/stores/favourites'
-
+import { formatTime } from '~/utils/formatDatee'
 const config = useRuntimeConfig()
 const watchlistStore = useWatchListStore()
 const selectedTab = ref<'movie' | 'tv'>('movie')
+
 
 const favoritesStore = useFavoritesStore()
 
@@ -16,15 +17,9 @@ const isItemFavorite = (id: number) => {
 }
 
 const filteredItems = computed(() =>
-  watchlistStore.movies.filter(item => item.type === selectedTab.value)
+  [...watchlistStore.movies].filter(item => item.type === selectedTab.value).reverse()
 )
 
-//    as const yani BUNLAR  year: 'string', month: 'string', day: 'string' ,DEYIL
-//  BOYLE GORSUN KI tip  HATA olmasin toLocaleDateString tip hatasi gibi gorebilir bazen    ----->>>   year: 'numeric', month: 'long', day: 'numeric'
-const formatDate = (dateStr: string) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' } as const
-  return new Date(dateStr).toLocaleDateString('en-US', options)
-}
 </script>
 <template>
   <div>
@@ -57,8 +52,8 @@ const formatDate = (dateStr: string) => {
         </div>
 
         <!-- Empty State -->
-        <div v-if="filteredItems.length === 0" class="text-gray-400 mb-4">
-          Henüz hiç {{ selectedTab === 'movie' ? 'film' : 'dizi' }} eklenmedi.
+        <div v-if="filteredItems.length === 0" class="text-gray-500 mb-4">
+          No movies  {{ selectedTab === 'movie' ? 'film' : 'shows' }}  have been added yet.
         </div>
 
         <div
@@ -83,7 +78,7 @@ const formatDate = (dateStr: string) => {
 
               <div class="">
                 <h2 class="text-lg font-semibold text-gray-700">{{ item.title }}</h2>
-                <p class="text-sm text-gray-500">{{ formatDate(item.release_date) }}</p>
+                <p class="text-sm text-gray-400">{{ formatTime(item.release_date) }}</p>
               </div>
             </div>
 

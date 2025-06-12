@@ -10,6 +10,8 @@ const props = defineProps<{
   title: string
 }>()
 */
+const activeMenuId = ref<number | null>(null)
+
 const props = withDefaults(
   defineProps<{
     movies?: Movie[]
@@ -40,7 +42,7 @@ const carouselBreakpoints: CarouselBreakpoints = {
         snap-align="start"
       >
         <Slide v-for="movie in movies" :key="movie.id" class="px-1">
-          <FilmCard :movie="movie" />
+          <FilmCard :movie="movie" :activeMenuId="activeMenuId" @update:activeMenuId="(val:number | null) => activeMenuId = val"/>
         </Slide>
         <template #addons>
           <Navigation />

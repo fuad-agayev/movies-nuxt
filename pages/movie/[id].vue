@@ -5,6 +5,9 @@ import VideoModal from '~/components/VideoModal.vue'
 import CircularRating from '~/components/CircularRating.vue'
 import { useWatchListStore } from '~/stores/watchlist'
 import { useFavoritesStore } from '~/stores/favourites'
+import { useRatingStore } from '~/stores/ratingstar'
+import VibeModal from '~/components/VibeModal.vue'
+
 
 const { fetchMovies } = useTmdb()
 const { fetchVideo } = videoTmdb()
@@ -13,11 +16,13 @@ const config = useRuntimeConfig()
 const watchlistStore = useWatchListStore()
 const favoritesStore = useFavoritesStore()
 
+
 const movie = ref<any>(null)
 const trailerKey = ref('')
 const showPlayer = ref(false)
 const directorName = ref('')
 const castList = ref<any[]>([])
+const showVibeModal = ref(false)
 
 // Fetch movie data
 onMounted(async () => {
@@ -62,6 +67,22 @@ const toggleWatchlist = () => {
     console.error('Watchlist işleminde hata:', error)
   }
 }
+
+const ratingStore = useRatingStore();
+const ratingUser = computed(() => {
+  return ratingStore.getRatings(movie.value?.id || 0)
+})
+
+//  bu islemi ternary ile templatede yapdim  boylede yapilir
+/*
+const getRatingColor = (percent: number) => {
+  if (percent <= 30) return 'text-rose-400'
+  if (percent <= 60) return 'text-yellow-400'
+  return 'text-green-400'
+}
+
+  :class="getRatingColor(userRating * 20)"
+*/
 
 const formatRuntime = (mins: number) => `${Math.floor(mins / 60)}h ${mins % 60}m`
 
@@ -176,6 +197,22 @@ useHead(() => ({
                 {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
               </div>
             </div>
+            <!-- User Rating Display -->
+<div v-if="ratingUser > 0" @click="showVibeModal = true"
+  class="flex items-center justify-center gap-x-2 text-sm text-gray-400 w-[180px] h-10 border border-white/50 rounded-xl text-center py-2 bg-white/20 shadow-xl"
+  >
+  <button>
+    <span class="text-white font-semibold"> Your Vibe </span>
+  <span class="text-white px-1"> {{ Math.round(ratingUser) }}/5 </span>
+  <span class="gap-4" :class="[ratingUser * 20 <= 30 ? 'text-rose-400' : ratingUser * 20 <= 60 ? 'text-yellow-400' : 'text-green-500' ]">
+     {{ (ratingUser * 20) }}%
+  </span>
+   </button>
+</div>
+<div v-else  @click="showVibeModal = true" class="text-sm font-semibold text-white w-[150px] h-10 cursor-pointer border border-white rounded-xl text-center py-2 bg-white/20">
+  Whats's your Vibe ?
+</div>
+
           </div>
 
           <p class="text-lg text-gray-300 italic mb-4">{{ movie.tagline }}</p>
@@ -219,6 +256,13 @@ useHead(() => ({
       </div>
 
       <VideoModal :shoow="showPlayer" :videoKey="trailerKey" @close="showPlayer = false" />
+      <VibeModal v-if="movie"
+  :visible="showVibeModal"
+  :movie-id="movie?.id"
+  :movie-title="movie?.title"
+  @close="showVibeModal = false"
+/>
+
     </section>
 
     <!-- Cast Section -->
@@ -248,6 +292,7 @@ useHead(() => ({
         </div>
       </div>
     </div>
+   
   </div>
 </template>
 

@@ -10,23 +10,23 @@
     <div class="absolute top-2 right-2 z-50" @click.stop>
       <button 
         @click="toggleFavMenu" 
-        class="p-1 bg-white/70 w-7 h-7 rounded-full hover:bg-indigo-400 transition-colors"
+        class="p-1 bg-white/70 w-7 h-7 rounded-full hover:bg-gray-500 transition-colors"
         aria-label="Movie options"
       >
-        <Icon name="mdi:dots-horizontal" class="text-black/70 text-xl" />
+        <Icon name="mdi:dots-horizontal" class="text-black/70 text-xl hover:text-white" />
       </button>
 
       <!-- Dropdown menu -->
       <transition name="fade">
         <div
-          v-if="showFavMenu"
-          class="mt-3 w-40 bg-white text-black/80 rounded shadow-lg absolute right-0 border border-slate-500 flex flex-col items-center px-4 z-50"
+           v-if="props.activeMenuId === props.movie.id"
+          class="mt-3 w-35 bg-white text-black/80 rounded shadow-lg absolute right-0 border-b-2 border-gray-500 flex flex-col items-center z-50"
           @click.stop
         >
           <!-- FAVORITE -->
           <button
             @click.stop="toggleFavour"
-            class="w-full h-10 px-4 py-2 text-black hover:bg-indigo-300/50 flex items-center space-x-2 transition-colors"
+            class="w-full h-10 px-4 py-6 text-black hover:text-white hover:bg-gray-500 flex items-center space-x-2 transition-colors"
           >
             <Icon 
               :name="isFavour ? 'mdi:heart' : 'mdi:heart-outline'" 
@@ -38,7 +38,7 @@
           <!-- WATCHLIST -->
           <button
             @click.stop="toggleWatchlist"
-            class="w-full h-10 px-4 py-2 text-black/80 hover:bg-indigo-300/50 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
+            class="w-full h-10 px-4 py-6 text-black/80 hover:text-white hover:bg-gray-500 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
           >
             <Icon 
               :name="inWatchlist ? 'mdi:bookmark' : 'mdi:bookmark-outline'" 
@@ -50,16 +50,23 @@
           <!-- YOUR RATING (New) -->
           <button
             @click.stop="showRatingModal = true"
-            class="w-full h-10 px-4 py-2 text-black/80 hover:bg-indigo-300/50 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
+            class="w-full h-10 px-4 py-6 text-black/80 hover:text-white hover:bg-gray-500 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
+           
           >
-            <Icon :name="ratingStore.getRatings(movie.id) ? 'mdi:star' : 'mdi:star-outline'" class="text-black text-sm" />
+            <Icon :name="ratingStore.getRatings(movie.id) ? 'mdi:star' : 'mdi:star-outline'" 
+                  :class="{
+                          'text-yellow-600': ratingStore.getRatings(movie.id),  // Puan varsa yıldız sarı
+                          'text-black': !ratingStore.getRatings(movie.id)        // Yoksa siyah
+                         }" 
+             />
             <span class="text-sm font-semibold"> Ratings </span>
-            <span> {{ ratingStore.getRatings(movie.id) }} </span>
+            
           </button>
           <RatingModal
             :movieId="movie.id"
             :visible="showRatingModal"
             @close="showRatingModal = false"
+             
           />
         </div>
       </transition>
@@ -134,7 +141,12 @@ import { useFavoritesStore } from '~/stores/favourites'
 import { useWatchListStore } from '~/stores/watchlist'
 import { formatTime } from '~/utils/formatDatee'
 
-const props = defineProps<{ movie: Movie }>()
+const props = defineProps<{ movie: Movie, activeMenuId: number | null }>()
+
+const emit = defineEmits<{
+  (e: 'update:activeMenuId', id: number | null): void
+}>()
+
 const config = useRuntimeConfig().public
 
 // State
@@ -164,7 +176,12 @@ const posterUrl = computed(() => {
 
 // Methods
 const toggleFavMenu = () => {
-  showFavMenu.value = !showFavMenu.value
+   if (props.activeMenuId === props.movie.id) {
+    emit('update:activeMenuId', null)  // Kapat
+  } else {
+    emit('update:activeMenuId', props.movie.id)  // Aç ve diğerlerini kapat
+  }
+ // showFavMenu.value = !showFavMenu.value
 }
 
 const toggleFavour = () => {
@@ -201,6 +218,7 @@ import { useRatingStore } from '~/stores/ratingstar'
 //const props = defineProps<{ movie: { id: number, title: string } }>()
 const showRatingModal = ref(false)
 const ratingStore = useRatingStore()
+
 </script>
 
 <style scoped>

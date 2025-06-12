@@ -4,10 +4,12 @@ import { useWatchListStore } from '~/stores/watchlist'
 import { useRuntimeConfig } from '#imports'
 import { useFavoritesStore } from '~/stores/favourites'
 import { formatTime } from '~/utils/formatDatee'
+import { useRatingStore } from '~/stores/ratingstar'
+import RatingModal from '~/components/RatingModal.vue'
+
 const config = useRuntimeConfig()
 const watchlistStore = useWatchListStore()
 const selectedTab = ref<'movie' | 'tv'>('movie')
-
 
 const favoritesStore = useFavoritesStore()
 
@@ -19,6 +21,21 @@ const isItemFavorite = (id: number) => {
 const filteredItems = computed(() =>
   [...watchlistStore.movies].filter(item => item.type === selectedTab.value).reverse()
 )
+
+const watchRating = useRatingStore()
+
+const showRatingModal = ref(false)
+const selectedMovieId = ref<number | null>(null)
+
+const openRatingModal = (id: number) => {
+  selectedMovieId.value = id
+  showRatingModal.value = true
+}
+
+const closeRatingModal = () => {
+  showRatingModal.value = false
+  selectedMovieId.value = null
+}
 
 </script>
 <template>
@@ -89,9 +106,38 @@ const filteredItems = computed(() =>
 
             <!-- Buttons -->
             <div class="mt-4 flex gap-4 text-sm text-gray-500">
+              <!-- Rating Button & Modal Wrapper -->
+<div class="relative">
+  <button
+    @click="openRatingModal(item.id)"
+    class="flex items-center gap-1 transition"
+  >
+    <Icon
+      :name="watchRating.getRatings(item.id) > 0 ? 'mdi:star' : 'mdi:star-outline'"
+      class="text-xl hover:text-gray-500"
+      :class="watchRating.getRatings(item.id) > 0 ? 'text-yellow-500' : 'text-gray-500'"
+    />
+    <span>
+      {{ watchRating.getRatings(item.id) > 0 ? Math.round(watchRating.getRatings(item.id) * 20) + '%' : 'Rate it!' }}
+    </span>
+  </button>
+
+  <!-- Modal burada hemen altında gözükür -->
+  <RatingModal
+    v-if="selectedMovieId === item.id && showRatingModal"
+    :movie-id="item.id"
+    :visible="showRatingModal"
+    @close="closeRatingModal"
+    class="absolute z-50 top-[70px] left-0"
+  />
+</div>
+
+                     
+  
+             
               <button
                 @click="favoritesStore.toggleFavorite(item.id)"
-                class="flex items-center gap-1 hover:text-pink-500 transition"
+                class="flex items-center gap-1 transition"
               >
                 <Icon
                   :name="isItemFavorite(item.id) ? 'mdi:heart' : 'mdi:heart-outline'"
@@ -113,9 +159,10 @@ const filteredItems = computed(() =>
         </div>
 
         <div v-if="filteredItems.length > 0" class="mt-6 text-gray-500 text-sm">
-          Toplam {{ filteredItems.length }} {{ selectedTab === 'movie' ? 'film' : 'dizi' }}.
+          Total {{ filteredItems.length }} {{ selectedTab === 'movie' ? 'film' : 'dizi' }}.
         </div>
       </div>
+     
     </ClientOnly>
   </div>
 </template>

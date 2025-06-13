@@ -53,15 +53,15 @@
         <!-- Theme Toggle -->
         <button
           @click="toggleTheme"
-          class="p-2 rounded-full hover:bg-netflix-light-dark dark:hover:bg-gray-200 transition-colors"
+          class="mb-3 w-7 h-7 flex items-center justify-center rounded hover:bg-netflix-light-dark dark:hover:bg-gray-200 transition-colors border border-gray-300"
         >
           <Icon
             v-if="colorMode.value === 'dark'"
             name="solar:sun-bold"
             class="text-white dark:text-netflix-black"
-            size="1.5em"
+            size="1em"
           />
-          <Icon v-else name="lucide:moon" class="text-white dark:text-netflix-black" size="1.5em" />
+          <Icon v-else name="lucide:moon-star" class="text-white bg-white dark:text-white" size="1em" />
         </button>
 
         <!-- Search -->
@@ -100,7 +100,7 @@
         </div>
       -->
 
-        <div class="md:hidden flex items-center">
+        <div class="md:hidden flex items-center mb-2">
           <button
             @click="isMobileMenuOpen = !isMobileMenuOpen"
             class="p-2 text-white dark:text-netflix-black"
@@ -187,6 +187,7 @@ const performSearch = () => {
     navigateTo(`/search?query=${encodeURIComponent(query)}`)
     // navigateTo(/search?q=${searchQuery.value.trim()});  boyle olsaydi mesela  ->>>>  hello world   2 sozun arasi bosluk dur  BU HATA veryor encodURIComponent bunu hallediyor
     showSearch.value = false
+    
   }
 }
 

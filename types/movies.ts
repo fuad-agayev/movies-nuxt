@@ -45,3 +45,33 @@ export interface CarouselBreakpoints {
     snapAlign: 'start' | 'center' | 'end'
   }
 }
+
+
+export interface SearchResult {
+  id: number
+  media_type: string
+  title?: string
+  name?: string
+  poster_path?: string
+  profile_path?: string
+  vote_average?: number
+}
+ 
+export type FilterOption = {
+  key: string,
+  label: string,
+  icon: string
+}
+
+export interface TmdbItem {
+  id: number
+  title?: string
+  name?: string
+  media_type: string
+  poster_path?: string
+  profile_path?: string
+  vote_average?: number
+  onWatchlist?: boolean
+  release_date: string
+  overview: string
+}

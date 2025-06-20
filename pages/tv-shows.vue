@@ -6,7 +6,7 @@
     <div class="w-64 h-32 border border-white/50">
       <h2> WatchEffect </h2>
       <textarea type="text" v-model="textContent" class="w-[250px] h-[50px] text-black/50" placeholder="Typiiing"></textarea>
-      <p v-if="isTyping" class>Fuad yazir ... </p>
+      <p v-if="isTyping" class>Fuad typining ... </p>
     </div>
   </div>
 </template>

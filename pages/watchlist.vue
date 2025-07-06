@@ -94,8 +94,13 @@ const closeRatingModal = () => {
               <watchlist-cir-rate :miniscore="item.vote_average" />
 
               <div class="">
-                <h2 class="text-lg font-semibold text-gray-700">{{ item.title }}</h2>
-                <p class="text-sm text-gray-400">{{ formatTime(item.release_date) }}</p>
+               
+                <h2 class="text-lg font-semibold text-gray-700">
+                              {{ item.type === 'movie' ? item.title : item.name }}
+                </h2>
+                <p class="text-sm text-gray-400">
+                               {{ formatTime(item.type === 'movie' ? item.release_date : item.first_air_date) }}
+                </p>
               </div>
             </div>
 

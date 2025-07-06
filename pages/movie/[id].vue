@@ -35,7 +35,7 @@ onMounted(async () => {
     castList.value = credits.cast
 
     const videoRes = await fetchVideo(`movie/${movieId}/videos`)
-    const trailer = videoRes.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
+    const trailer = videoRes?.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
     trailerKey.value = trailer?.key || ''
   } catch (error) {
     console.error('Error fetching movie details:', error)

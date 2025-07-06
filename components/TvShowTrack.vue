@@ -1,9 +1,9 @@
 /* File: components/MoviesTrack.vue */
 <script setup lang="ts">
-import type { Movie, CarouselBreakpoints } from '~/types/movies'
+import type { TvShow, CarouselBreakpoints } from '~/types/movies'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-import FilmCard from './FilmCard.vue'
+import TvShowCard from './TvShowCard.vue'
 /*
 const props = defineProps<{
   movies: Movie[]
@@ -14,11 +14,11 @@ const activeMenuId = ref<number | null>(null)
 
 const props = withDefaults(
   defineProps<{
-    movies?: Movie[]
+    tvShows?: TvShow[]
     title?: string
   }>(),
   {
-    movies: () => [],
+    tvShows:() => [],
     title: 'Default Title'
   }
 )
@@ -41,8 +41,8 @@ const carouselBreakpoints: CarouselBreakpoints = {
         :breakpoints="carouselBreakpoints"
         snap-align="start"
       >
-        <Slide v-for="movie in movies" :key="movie.id" class="px-1">
-          <FilmCard :movie="movie" :activeMenuId="activeMenuId" @update:activeMenuId="(val:number | null) => activeMenuId = val"/>
+        <Slide v-for="tvshows in tvShows" :key="tvshows.id" class="px-1">
+          <TvShowCard :tvshow="tvshows" :activeMenuId="activeMenuId" @update:activeMenuId="(val:number | null) => activeMenuId = val"/>
         </Slide>
       <template #addons>
         <Navigation/>

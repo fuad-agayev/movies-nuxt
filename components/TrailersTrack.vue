@@ -1,57 +1,55 @@
-/* File: components/MoviesTrack.vue */
 <script setup lang="ts">
-import type { Movie, CarouselBreakpoints } from '~/types/movies'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-import FilmCard from './FilmCard.vue'
-/*
-const props = defineProps<{
-  movies: Movie[]
-  title: string
-}>()
-*/
-const activeMenuId = ref<number | null>(null)
+import type { Video, CarouselBreakpoints } from '~/types/movies'
 
 const props = withDefaults(
   defineProps<{
-    movies?: Movie[]
+    videos?: Video[]
     title?: string
   }>(),
-  {
-    movies: () => [],
-    title: 'Default Title'
-  }
+  { videos: () => [], title: 'Trailers' }
 )
 
-const carouselBreakpoints: CarouselBreakpoints = {
-  640: { itemsToShow: 3.5, snapAlign: 'start' },
-  768: { itemsToShow: 4.5, snapAlign: 'start' },
-  1024: { itemsToShow: 5.5, snapAlign: 'start' },
-  1280: { itemsToShow: 6.6, snapAlign: 'start' }
+/* kırılım noktaları */
+const breakpoints: CarouselBreakpoints = {
+  640:  { itemsToShow: 1.5, snapAlign: 'start' },   // ≥ sm
+  768:  { itemsToShow: 2.5, snapAlign: 'start' },   // ≥ md
+  1024: { itemsToShow: 3.5, snapAlign: 'start' },   // ≥ lg
+  1280: { itemsToShow: 4.5, snapAlign: 'start' }    // ≥ xl
 }
 </script>
 
 <template>
-  <div class="py-1">
-    <h2 class="text-lg md:text-xl text-netflix-light-dark font-bold mb-2 px-4">{{ title }}</h2>
-    <div class="relative">
-      <Carousel
-        :items-to-show="2"
-        :wrap-around="false"
-        :breakpoints="carouselBreakpoints"
-        snap-align="start"
-      >
-        <Slide v-for="movie in movies" :key="movie.id" class="px-1">
-          <FilmCard :movie="movie" :activeMenuId="activeMenuId" @update:activeMenuId="(val:number | null) => activeMenuId = val"/>
-        </Slide>
-      <template #addons>
-        <Navigation/>
-      </template>
-      </Carousel>
-    </div>
-  </div>
-</template>
+  <section class="py-4">
+    <h2 class="px-4 mb-3 text-xl md:text-2xl font-bold text-netflix-light-dark">
+      {{ title }}
+    </h2>
 
+    <Carousel
+      :items-to-show="1.2"
+      :wrap-around="false"
+      :breakpoints="breakpoints"
+      snap-align="start"
+      class="px-2"
+    >
+      <Slide v-for="v in videos" :key="v.id" class="px-1">
+        <div class="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl overflow-hidden shadow-lg">
+          <iframe
+            :src="`https://www.youtube.com/embed/${v.key}`"
+            class="w-full h-full object-cover"
+            allowfullscreen
+            sandbox="allow-scripts allow-same-origin"
+          />
+        </div>
+      </Slide>
+
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
+  </section>
+</template>
 <style scoped>
 /*--------------------------------------------------------------*/
 /* NAVİGASYON DÜĞMESİ TEMEL STİLİNİZ (AYNEN KORUNDU)            */
@@ -93,4 +91,5 @@ const carouselBreakpoints: CarouselBreakpoints = {
 }
 
 </style>
+
 

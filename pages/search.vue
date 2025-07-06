@@ -1,6 +1,6 @@
 
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Header Section -->
       <div class="mb-8">
@@ -18,7 +18,7 @@
       </div>
 
       <!-- Filters Section -->
-      <div class="mb-6 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200">
+      <div class="mb-6 p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div class="w-full">
             <h2 class="text-base sm:text-lg font-semibold text-gray-700 mb-2">Filter by</h2>
@@ -44,7 +44,7 @@
       </div>
 
       <!-- Results Section -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <!-- Results Header -->
         <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">

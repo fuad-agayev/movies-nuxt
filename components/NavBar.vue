@@ -176,6 +176,8 @@
   </header>
 </template>
 <script setup lang="ts">
+import { debounce } from 'lodash-es'
+//import debounce from 'lodash/debounce'
 const colorMode = useColorMode()
 const searchQuery = ref('')
 const isMobileMenuOpen = ref(false)
@@ -239,7 +241,7 @@ const toggleDropdown = () => {
 
 
 
-const searchDropdown = async () => {
+const searchDropdown = async() => {
   if (!searchQuery.value) return
   loadingDropdown.value = true
 
@@ -255,10 +257,14 @@ const searchDropdown = async () => {
   }
 }
 
-watch(searchQuery, async (newQuery) => {
+const debounceDropdownSearch = debounce(() => {
+        searchDropdown()
+}, 1500)
+
+watch(searchQuery, (newQuery) => {
   if (newQuery.trim()) {
     showDropdown.value = true
-    await searchDropdown()
+     debounceDropdownSearch()
   } else {
     showDropdown.value = false
     resultsDropdown.value = []

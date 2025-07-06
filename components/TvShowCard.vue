@@ -1,4 +1,3 @@
-
 <template>
   <div
     class="relative group transition-all duration-300 ease-in-out cursor-pointer h-full shadow-md"
@@ -19,7 +18,7 @@
       <!-- Dropdown menu -->
       <transition name="fade">
         <div
-           v-if="props.activeMenuId === props.movie.id"
+           v-if="props.activeMenuId === props.tvshow.id"
           class="mt-3 w-35 bg-white text-black/80 rounded shadow-lg absolute right-0 border-b-2 border-gray-500 flex flex-col items-center z-50"
           @click.stop
         >
@@ -53,17 +52,17 @@
             class="w-full h-10 px-4 py-6 text-black/80 hover:text-white hover:bg-gray-500 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
            
           >
-            <Icon :name="ratingStore.getRatings(movie.id) ? 'mdi:star' : 'mdi:star-outline'" 
+            <Icon :name="ratingStore.getRatings(tvshow.id) ? 'mdi:star' : 'mdi:star-outline'" 
                   :class="{
-                          'text-yellow-600': ratingStore.getRatings(movie.id),  // Puan varsa yıldız sarı
-                          'text-black': !ratingStore.getRatings(movie.id)        // Yoksa siyah
+                          'text-yellow-600': ratingStore.getRatings(tvshow.id),  // Puan varsa yıldız sarı
+                          'text-black': !ratingStore.getRatings(tvshow.id)        // Yoksa siyah
                          }" 
              />
             <span class="text-sm font-semibold"> Ratings </span>
             
           </button>
           <RatingModal
-            :movieId="movie.id"
+            :movieId="tvshow.id"
             :visible="showRatingModal"
             @close="showRatingModal = false"
              
@@ -76,7 +75,7 @@
     <div :class="cardClasses">
       <img
         :src="posterUrl"
-        :alt="movie.title"
+        :alt="tvshow.title"
         class="w-full h-full object-cover transition-opacity duration-300"
         @error="handleImageError"
         loading="lazy"
@@ -87,11 +86,11 @@
     <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
       <div class="flex justify-between items-start">
         <div>
-          <h3 class="text-lg text-white font-semibold line-clamp-1">{{ movie.title }}</h3>
-          <div class="text-xs text-gray-300">{{ formatDate(movie.release_date) }}</div>
+          <h3 class="text-lg text-white font-semibold line-clamp-1">{{ tvshow.name }}</h3>
+          <div class="text-xs text-gray-300">{{ formatDate(tvshow.first_air_date) }}</div>
         </div>
         <div class="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">
-          {{ movie.vote_average?.toFixed(1) || 'N/A' }}
+          {{ tvshow.vote_average?.toFixed(1) || 'N/A' }}
         </div>
       </div>
     </div>
@@ -136,12 +135,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Movie } from '~/types/movies'
+import type { TvShow, Movie } from '~/types/movies'
 import { useFavoritesStore } from '~/stores/favourites'
 import { useWatchListStore } from '~/stores/watchlist'
 import { formatTime } from '~/utils/formatDatee'
 
-const props = defineProps<{ movie: Movie, activeMenuId: number | null }>()
+const props = defineProps<{ tvshow: TvShow, activeMenuId: number | null }>()
 
 
 const emit = defineEmits<{
@@ -165,39 +164,48 @@ const cardClasses = computed(() => [
   isHovered.value ? 'transform scale-105 z-20 shadow-xl' : ''
 ])
 
-const isFavour = computed(() => favoritesStore.favorites.includes(props.movie.id))
-const inWatchlist = computed(() => watchlistStore.isInWatchlist(props.movie.id))
+const isFavour = computed(() => favoritesStore.favorites.includes(props.tvshow.id))
+const inWatchlist = computed(() => watchlistStore.isInWatchlist(props.tvshow.id))
 
 const posterUrl = computed(() => {
-  if (imgError.value || !props.movie.poster_path) {
+  if (imgError.value || !props.tvshow.poster_path) {
     return '/images/troya.jpg'
   }
-  return `${config.imageBaseUrl}/w342${props.movie.poster_path}`
+  return `${config.imageBaseUrl}/w342${props.tvshow.poster_path}`
 })
 
 // Methods
 const toggleFavMenu = () => {
-   if (props.activeMenuId === props.movie.id) {
+   if (props.activeMenuId === props.tvshow.id) {
     emit('update:activeMenuId', null)  // Kapat
   } else {
-    emit('update:activeMenuId', props.movie.id)  // Aç ve diğerlerini kapat
+    emit('update:activeMenuId', props.tvshow.id)  // Aç ve diğerlerini kapat
   }
  // showFavMenu.value = !showFavMenu.value
 }
 
 const toggleFavour = () => {
-  favoritesStore.toggleFavorite(props.movie.id)
+  favoritesStore.toggleFavorite(props.tvshow.id)
   showFavMenu.value = false
 }
 
+
+
 const toggleWatchlist = () => {
-  watchlistStore.toggleMovie({...props.movie, type: 'movie'})
+  const fakeMovie = {
+    ...props.tvshow,
+    type: 'movie',             // store hâlâ movie bekliyor
+    title: props.tvshow.name,  // Movie alanı
+    release_date: props.tvshow.first_air_date // Movie alanı
+  } as unknown as Movie        // CAST!
+  
+  watchlistStore.toggleMovie(fakeMovie)
   showFavMenu.value = false
 }
 
 const openRatingModal = () => {
   // Implement your rating modal logic here
-  console.log('Open rating modal for', props.movie.id)
+  console.log('Open rating modal for', props.tvshow.id)
   showFavMenu.value = false
 }
 
@@ -206,7 +214,7 @@ const handleImageError = () => {
 }
 
 const navigateToMovie = () => {
-  navigateTo(`/movie/${props.movie.id}`)
+  navigateTo(`/tv/${props.tvshow.id}`)
 }
 
 const formatDate = (dateString: string) => {

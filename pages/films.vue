@@ -1,5 +1,4 @@
 
-
 <template>
   <div>
     <section class="p-6 dark:bg-black/80 bg-white text-gray-400">

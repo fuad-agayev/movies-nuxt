@@ -1,38 +1,112 @@
+
 <template>
-  <div class="flex items-center justify-center w-full h-screen text-white/60">
-    <h1 class="text-4xl font-bold mb-4">Welcome to My Film Page</h1>
-    <p class="text-lg text-rose-500">Here you can find all your favorite films!</p>
-    <h3>My film Page</h3>
-    <div class="w-64 h-32 border border-white/50">
-      <h2> WatchEffect </h2>
-      <textarea type="text" v-model="textContent" class="w-[250px] h-[50px] text-black/50" placeholder="Typiiing"></textarea>
-      <p v-if="isTyping" class>Fuad typining ... </p>
-    </div>
+  <div>
+    <section class="p-6 dark:bg-black/80 bg-white text-gray-400">
+      <!-- Kategori düğmeleri -->
+      <div class="flex flex-wrap justify-center mb-6 gap-x-2 gap-y-3">
+        <button
+          v-for="cat in categories"
+          :key="cat.key"
+          @click="selectCategory(cat.key)"
+          :class="[
+            'px-2 py-1 text-xs sm:px-3 sm:text-sm md:px-4 md:text-base font-bold transition',
+            cat.key === selectedCategory
+              ? 'border-b-2 border-indigo-300 text-gray-400'
+              : 'text-black/70 hover:bg-white/10'
+          ]"
+        >
+          {{ cat.label }}
+        </button>
+      </div>
+
+      <!-- TV Kartları -->
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6
+               gap-x-2 gap-y-6 mx-auto max-w-screen-xl"
+      >
+        <TvPageCard
+          v-for="tv in allShows"
+          :key="tv.id"
+          :tv="tv"
+          :imj="`${config.public.imageBaseUrl}/w500${tv.poster_path}`"
+          @play="openTrailer"
+        />
+      </div>
+
+      <!-- Fragman modalı -->
+      <VideoModal
+        v-if="showPlayer"
+        :shoow="showPlayer"
+        :videoKey="trailerKey"
+        @close="showPlayer = false"
+      />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-const textContent = ref('')
-const isTyping = ref(false)
-const stop = watchEffect((onIvalidate) => {
-       if (textContent.value.length > 0) {
-        isTyping.value = true;
-        if (textContent.value.length > 10){
-            stop()   //  //  10 dan artik yazsan dayanar typing .....  bu gorsenmez  YYANI WATCHEFFECT ARTIK 10 TANEDEN ARTIK reactiv olarak gormur
-        }
+import { ref, onMounted, computed } from 'vue'
+import { useRuntimeConfig } from '#imports'
+import { useTmdb } from '~/composables/useTmdb'
+import { videoTmdb } from '~/composables/videoUrlTmdb'
+import TvPageCard from '~/components/TvPageCard.vue'
 
-       const showTypingStatus = setTimeout(() => {
-            isTyping.value = false
-       }, 2000);
+const config = useRuntimeConfig()
+const { fetchMovies } = useTmdb() // fetchTVShows olabilir ama reuse edebilirsin
+const { fetchVideo } = videoTmdb()
 
-       onIvalidate(() => {
-         clearInterval(showTypingStatus)
-       })
-       }
+const show_page = ref<Record<string, any[]>>({})
+const showPlayer = ref(false)
+const trailerKey = ref('')
+const selectedCategory = ref('popular')
+const categories = [
+  { key: 'popular', endpoint: 'tv/popular', label: 'POPULAR' },
+  { key: 'airing_today', endpoint: 'tv/airing_today', label: 'AIRING TODAY' },
+  { key: 'on_the_air', endpoint: 'tv/on_the_air', label: 'ON AIR' },
+  { key: 'top_rated', endpoint: 'tv/top_rated', label: 'TOP RATED' }
+]
 
+const pagesToLoad = 5
+
+async function fetchMultiplePages(key: string, pagesCount = pagesToLoad) {
+  const cat = categories.find(c => c.key === key)!
+  const promises = []
+  for (let i = 1; i <= pagesCount; i++) {
+    promises.push(fetchMovies(`${cat.endpoint}?page=${i}`))
+  }
+
+  const results = await Promise.all(promises)
+  const combined = results.flatMap(r => r.results || r)
+  show_page.value[key] = combined
+}
+
+onMounted(() => {
+  fetchMultiplePages(selectedCategory.value)
 })
-useSeoMeta({
-  title: 'My Tv  Films',
-  description: 'Kaydedilen favori filmler tv listesi'
-})
+
+const allShows = computed(() => show_page.value[selectedCategory.value] || [])
+
+async function openTrailer(tvId: number) {
+  trailerKey.value = ''
+  showPlayer.value = false
+
+  const videoRes = await fetchVideo(`tv/${tvId}/videos`)
+  const trailer = videoRes?.results.find(
+    (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+  )
+
+  if (trailer?.key) {
+    trailerKey.value = trailer.key
+    showPlayer.value = true
+  } else {
+    alert('Bu dizi için YouTube fragmanı bulunamadı.')
+  }
+}
+
+async function selectCategory(key: string) {
+  selectedCategory.value = key
+  if (!show_page.value[key]?.length) {
+    await fetchMultiplePages(key)
+  }
+}
 </script>

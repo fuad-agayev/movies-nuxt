@@ -27,7 +27,6 @@ export interface TvShow {
   genre_ids: number[]
   [key: string]: any
   type: 'tv'
- 
 }
 
 export interface Video {

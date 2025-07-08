@@ -2,7 +2,7 @@
 
 // stores/watchlist.ts
 import { defineStore } from 'pinia'
-import type { Movie } from '~/types/movies'
+import type { Movie, TvShow } from '~/types/movies'
 
 export const useWatchListStore = defineStore('watchlist', {
   state: () => ({

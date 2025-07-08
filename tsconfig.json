@@ -5,4 +5,5 @@
   "compilerOptions": {
     "types": ["pinia-plugin-persistedstate"]
   }
+
 }

@@ -11,7 +11,7 @@ import {  useTvShows} from '~/composables/useTvShows'
 import { useTrailers } from '~/composables/useTrailers'
 const { pickTrailers } = useTrailers()
 
-const { fetchTvShows } = useTvShows()
+const { fetchTv } = useTvShows()
 const { fetchMovies } = useTmdb()
 //const { fetchVideo } = videoTmdb()
 
@@ -37,7 +37,7 @@ const thriller    = ref<Movie[]>([])
 const trailers = ref<any[]>([]) 
 //const featuredMovie = ref<Movie | null>(null)
 
-const favoriteIds = [109091, 156022, 1579, 8966, 238, 429, 281957, 597,197,605,603,652,2019,8681,861,19995,98,27205]
+const favoriteIds = [109091, 156022, 1579, 8966, 911430, 238, 429, 281957, 597, 387688, 197,605,603,652,2019,8681,861,19995,98,27205]
 const favorites = ref<Movie[]>([])
 
 
@@ -67,8 +67,8 @@ onMounted(async () => {
   topRated.value = await fetchMovies('movie/top_rated')
   upcoming.value = await fetchMovies('movie/upcoming')
 
-  tvpopular.value = await fetchTvShows('popular')
-  tvrated.value = await fetchTvShows('top_rated')
+  tvpopular.value = await fetchTv('popular')
+  tvrated.value = await fetchTv('top_rated')
    /* 3) Tür bazlı listeler (discover) */
   documentary.value = await fetchMovies('discover/movie?with_genres=99&sort_by=popularity.desc') ?? []
   horror.value      = await fetchMovies('discover/movie?with_genres=27&sort_by=popularity.desc') ?? []

@@ -8,6 +8,7 @@ export const useTmdb = () => {
       const res = await $fetch(`${config.public.apiBaseUrl}/${endpoint}`, {
         params: {
           api_key: config.public.apiKey
+          
         }
       })
       return res.results ?? res

@@ -1,12 +1,11 @@
 
-
 import { useRuntimeConfig } from '#imports'
 import type { TvShow, TvShowApiResponse } from '~/types/movies'
 
 export const useTvShows = () => {
   const config = useRuntimeConfig()
 
-  const fetchTvShows = async (endpoint: string): Promise<TvShow[]> => {
+  const fetchTv = async (endpoint: string): Promise<TvShow[]> => {
     try {
       const res = await $fetch<TvShowApiResponse>(
         `${config.public.apiBaseUrl}/tv/${endpoint}`,
@@ -24,5 +23,5 @@ export const useTvShows = () => {
     }
   }
 
-  return { fetchTvShows }
+  return { fetchTv }
 }

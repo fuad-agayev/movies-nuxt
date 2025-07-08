@@ -63,6 +63,10 @@ const breakpoints: CarouselBreakpoints = {
   background:rgba(0,0,0,.5); color:#fff;
   transition:background .2s;
   margin:4px;
+  /* --- EKLEDİKLERİM --- */
+  z-index: 50;          /* iframe’in üstünde kal */
+  cursor: pointer;      /* el ikonu çıksın */
+  pointer-events: auto; /* emin olalım */
 }
 :deep(.carousel__prev:hover),
 :deep(.carousel__next:hover){

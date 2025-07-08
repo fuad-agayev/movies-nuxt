@@ -19,8 +19,10 @@ const isItemFavorite = (id: number) => {
 }
 
 const filteredItems = computed(() =>
-  [...watchlistStore.movies].filter(item => item.type === selectedTab.value).reverse()
+ [...watchlistStore.movies].filter(item => item.type === selectedTab.value).reverse()
 )
+
+
 
 const watchRating = useRatingStore()
 

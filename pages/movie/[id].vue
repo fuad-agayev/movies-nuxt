@@ -7,8 +7,9 @@ import { useWatchListStore } from '~/stores/watchlist'
 import { useFavoritesStore } from '~/stores/favourites'
 import { useRatingStore } from '~/stores/ratingstar'
 import VibeModal from '~/components/VibeModal.vue'
+//import { useTvShows } from '~/composables/useTvShows'
 
-
+//const { fetchTv } = useTvShows()
 const { fetchMovies } = useTmdb()
 const { fetchVideo } = videoTmdb()
 const route = useRoute()
@@ -86,24 +87,20 @@ const getRatingColor = (percent: number) => {
 
 const formatRuntime = (mins: number) => `${Math.floor(mins / 60)}h ${mins % 60}m`
 
-// Dynamic head tags
+/* META TAGS */
 useHead(() => ({
-  title: movie.value?.title ? `Film: ${movie.value.title}` : 'Film Yükleniyor...',
+  title: movie.value?.name ? `Dizi: ${movie.value.name}` : 'Dizi Yükleniyor…',
   meta: [
-    { name: 'description', content: movie.value?.overview || 'Film açıklaması bulunamadı.' },
-    { property: 'og:description', content: movie.value?.overview || 'Açıklama yok.' },
+    { name: 'description',       content: movie.value?.overview || 'Dizi açıklaması bulunamadı.' },
+    { property: 'og:description', content: movie.value?.overview || '' },
     {
       property: 'og:image',
-      content: movie.value?.poster_path
-        ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}`
-        : ''
+      content: movie.value?.poster_path ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}` : ''
     },
-    { name: 'twitter:title', content: movie.value?.title || 'Film' },
+    { name: 'twitter:title',  content: movie.value?.title || 'Dizi' },
     {
       name: 'twitter:image',
-      content: movie.value?.poster_path
-        ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}`
-        : ''
+      content: movie.value?.poster_path ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}` : ''
     }
   ]
 }))
@@ -358,3 +355,4 @@ useHead(() => ({
   border-radius: 9999px;
 }
 </style>
+

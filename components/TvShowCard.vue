@@ -194,7 +194,7 @@ const toggleFavour = () => {
 const toggleWatchlist = () => {
   const fakeMovie = {
     ...props.tvshow,
-    type: 'movie',             // store hâlâ movie bekliyor
+    type: 'tv',             // store hâlâ movie bekliyor
     title: props.tvshow.name,  // Movie alanı
     release_date: props.tvshow.first_air_date // Movie alanı
   } as unknown as Movie        // CAST!

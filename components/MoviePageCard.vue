@@ -20,6 +20,11 @@
         {{ movie.title }}
       </p>
 
+       <!-- Tarih -->
+      <p class="text-xs text-gray-400 mt-0.5">
+        {{ formatTime(movie.release_date) }}
+      </p>
+
       <!-- Butonlar -->
       <div class="flex flex-col space-y-2 text-sm">
         <button class="bg-[#1f1f1f] rounded-lg px-2 text-indigo-400 py-1 hover:bg-[#333]"
@@ -45,6 +50,7 @@
 <script setup lang="ts">
 import { useWatchListStore } from '~/stores/watchlist'
 import type { Movie } from '~/types/movies'
+import { formatTime } from '~/utils/formatDatee'
 
 const watchlistStore = useWatchListStore()
 

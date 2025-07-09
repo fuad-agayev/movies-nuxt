@@ -14,15 +14,15 @@
 
 <style scoped>
 .spinner-ring {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   position: relative;
   margin: auto;
 }
 
 .dot {
-  width: 2.5px;
-  height: 2.5px;
+  width: 10px;
+  height:10px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   position: absolute;

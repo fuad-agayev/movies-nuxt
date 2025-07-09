@@ -2,7 +2,7 @@
 <template>
   <div class="relative group w-full max-w-[210px] mx-auto rounded-lg overflow-hidden bg-black/80 shadow-md border border-black/20 transition duration-300">
 
-    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40
+    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50
              transition duration-300 pointer-events-none z-0"></div>
 <div class="absolute -top-2 -left-3 w-full flex items-center justify-between">
   <!-- Watchlist Butonu -->
@@ -15,15 +15,17 @@
       :name="'mdi:bookmark'"
       class="text-6xl transition-all duration-200 bg-black/70"
       :class="inList
-        ? 'bg-yellow-400 text-black/50 shadow-md'
+        ? 'bg-yellow-500 text-black/50 shadow-md'
         : 'bg-black/60 text-white hover:bg-black/80 rounded'"
     />
-
+     
     <!-- İçteki Küçük İşaret -->
     <Icon
-      :name="inList ? 'mdi:check-bold' : 'mdi:plus'"
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl bg-white rounded-full shadow py-4"
+      :name="inList ? 'mdi:check' : 'mdi:plus'"
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black text-2xl rounded-full shadow py-4"
     />
+
+    
   </div>
 </div>
 
@@ -85,6 +87,15 @@ import { useWatchListStore } from '~/stores/watchlist'
 import type { TvShow, Movie } from '~/types/movies'
 import { formatTime } from '~/utils/formatDatee'
 
+
+
+const loading = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 5000) // 3 saniye sonra loading false olur
+})
+
 const props = defineProps<{
   tv: TvShow
   imj: string
@@ -122,3 +133,9 @@ function formatDuration(seconds?: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
 </script>
+
+
+
+
+
+

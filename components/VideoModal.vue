@@ -14,9 +14,16 @@
       >
         <Icon name="mdi:close" />
       </button>
-
+ <!-- 3 Saniyelik Spinner -->
+     <div class="absolute inset-0 flex items-center justify-center pointer-events-none my-auto">
+  <SpinnerLoading
+    v-if="videoLoading"
+    class="scale-150 text-white"
+  />
+  </div>
       <!-- Video Iframe -->
       <iframe
+          v-if="!videoLoading"
         :src="`https://www.youtube.com/embed/${videoKey}?autoplay=1`"
         frameborder="0"
         allow="autoplay; encrypted-media"
@@ -28,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import SpinnerLoading from '~/components/SpinnerLoading.vue'
+const props = defineProps<{
   shoow: boolean
   videoKey: string
 }>()
@@ -36,4 +44,16 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+
+const videoLoading = ref(true)
+
+watch(() => props.videoKey, () => {
+  if (props.videoKey) {
+    videoLoading.value = true
+    setTimeout(() => {
+      videoLoading.value = false
+    }, 5000)
+  }
+})
 </script>

@@ -32,7 +32,7 @@
             <li><NuxtLink to="/tv-shows" class="text-xs hover:underline"> 📺 Shows </NuxtLink></li>
             <li>
               <NuxtLink to="/watchlist" class="text-xs hover:underline"> Watchlist </NuxtLink>
-            </li><svg width="210" height="210" xmlns="http://www.w3.org/2000/svg" style="background:#fff;"> <!-- Siyah ve beyaz kareler --> <rect x="0" y="0" width="10" height="10" fill="white"/> <rect x="10" y="0" width="10" height="10" fill="black"/> <rect x="20" y="0" width="10" height="10" fill="white"/> <rect x="30" y="0" width="10" height="10" fill="black"/> <rect x="40" y="0" width="10" height="10" fill="white"/> <rect x="50" y="0" width="10" height="10" fill="black"/> <rect x="60" y="0" width="10" height="10" fill="white"/> <rect x="70" y="0" width="10" height="10" fill="black"/> <rect x="80" y="0" width="10" height="10" fill="white"/> <rect x="90" y="0" width="10" height="10" fill="white"/> <rect x="100" y="0" width="10" height="10" fill="white"/> <rect x="110" y="0" width="10" height="10" fill="white"/> <rect x="120" y="0" width="10" height="10" fill="white"/> <rect x="130" y="0" width="10" height="10" fill="white"/> <rect x="140" y="0" width="10" height="10" fill="white"/> <rect x="150" y="0" width="10" height="10" fill="white"/> <rect x="160" y="0" width="10" height="10" fill="white"/> <rect x="170" y="0" width="10" height="10" fill="white"/> <rect x="180" y="0" width="10" height="10" fill="white"/> <rect x="190" y="0" width="10" height="10" fill="white"/> <rect x="200" y="0" width="10" height="10" fill="white"/> <!-- ... satırlar devam eder ... --> </svg>
+            </li>
 
           </ul>
         </div>

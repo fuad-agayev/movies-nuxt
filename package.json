@@ -4,10 +4,19 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "cross-env HOST=0.0.0.0 nuxt dev",
+    "dev1": "cross-env HOST=0.0.0.0 nuxt dev",
+    "dev": "cross-env HOST=localhost nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"  
+    "postinstall": "nuxt prepare",
+     "test:e2e": "start-server-and-test preview http://localhost:3000 'cypress run --e2e'",
+     "test:e2e:dev:open": "start-server-and-test dev http://localhost:3000 'cypress open --e2e'",
+     "test:e2e:dev:run": "start-server-and-test dev http://localhost:3000 'cypress run --e2e'",
+     "test:e2e:gui": "start-server-and-test preview http://localhost:3000 'cypress open --e2e'",
+     "cypress:open": "cypress open --e2e",
+     "cypress:run": "cypress run --e2e",
+     "cypress:npx:run": "npx cypress run --e2e",
+     "cypress:npx:open": "npx cypress open --e2e"
   },
   "dependencies": {
     "@nuxt/icon": "^1.13.0",
@@ -24,7 +33,14 @@
     "vue3-carousel": "^0.15.1"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^3.19.2",
     "@types/lodash-es": "^4.17.12",
-    "cross-env": "^7.0.3"
+    "@vitest/ui": "^3.2.4",
+    "@vue/test-utils": "^2.4.6",
+    "cross-env": "^7.0.3",
+    "cypress": "^14.5.1",
+    "jsdom": "^26.1.0",
+    "start-server-and-test": "^2.0.12",
+    "vitest": "^3.2.4"
   }
 }

@@ -37,7 +37,7 @@ const thriller    = ref<Movie[]>([])
 const trailers = ref<any[]>([]) 
 //const featuredMovie = ref<Movie | null>(null)
 
-const favoriteIds = [109091, 156022, 1579, 8966, 911430, 238, 429, 281957, 597, 387688, 197,605,603,652,2019,8681,861,19995,98,27205]
+const favoriteIds = [109091, 156022, 1579, 8966, 911430, 238, 429, 281957, 597, 387688, 197,605,603,652,2019,75174,861,19995,98,27205]
 const favorites = ref<Movie[]>([])
 
 

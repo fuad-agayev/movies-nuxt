@@ -3,6 +3,7 @@
     v-if="showw"
     @click.self="$emit('close')"
     class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-4"
+     data-cy="info-modal"
   >
     <div
       class="relative bg-transparent text-white rounded-lg shadow-lg w-full max-w-2xl overflow-hidden border border-white/20"

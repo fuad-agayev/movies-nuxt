@@ -9,7 +9,7 @@
       :src="imj"
       :alt="movie.title"
       class="w-full h-[300px] object-cover cursor-pointer"
-       @click.stop="navigateTo(`/movie/${movie.id}`)"
+      @click.stop="navigateTo(`/movie/${movie.id}`)"
     />
     <div class="p-3 space-y-2">
       <div class="flex items-center text-sm space-x-1 text-yellow-400">
@@ -34,12 +34,22 @@
     inList ? 'text-indigo-300' : 'bg-[#1f1f1f] hover:bg-[#333]'
   ]"
         >
-        <span v-if="inList" class="px-2 text-sm">✓ Watchlist</span>
-  <span v-else>+ Watchlist</span>
+        <template v-if="showWatchlist">
+    <SpinnerWatchlist class="py-2" />
+  </template>
+  <template v-else>
+    <span v-if="inList" class="px-2 text-sm">✓ Watchlist</span>
+    <span v-else>+ Watchlist</span>
+  </template>
+
+
+       
         </button>
+
         <button class="px-2 py-1 text-white hover:bg-[#333] rounded-lg flex items-center justify-center" @click="$emit('play', movie.id)">
           <Icon name="mdi:play" class="mr-2 text-xl" /> Trailer
         </button>
+       
       </div>
     </div>
    
@@ -51,17 +61,24 @@
 import { useWatchListStore } from '~/stores/watchlist'
 import type { Movie } from '~/types/movies'
 import { formatTime } from '~/utils/formatDatee'
-
+import SpinnerWatchlist from './SpinnerWatchlist.vue'
 const watchlistStore = useWatchListStore()
 
 const store = useWatchListStore()
-
+const showWatchlist = ref(false)
 /* mevcut film listede mi? */
 const inList = computed(() => store.isInWatchlist(props.movie.id))
 
-/* ekle / çıkar tek fonksiyon */
-function toggle() {
-  store.toggleMovie({...props.movie, type: 'movie'})
+
+async function toggle() {
+  if (showWatchlist.value) return
+
+  showWatchlist.value = true
+
+  setTimeout(() => {
+    store.toggleMovie({ ...props.movie, type: 'movie' })
+    showWatchlist.value = false
+  }, 2000)
 }
 
 const props = defineProps<{

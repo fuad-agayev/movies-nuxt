@@ -9,7 +9,7 @@
           v-for="cat in categories"
           :key="cat.key"
           @click="selectCategory(cat.key)"
-          
+          :data-cy="`category-${cat.key}`"
           :class="[
             'px-2 py-1 text-xs',
             'sm:px-3 sm:text-sm',
@@ -36,6 +36,7 @@
           :movie="movie"
           :imj="`${config.public.imageBaseUrl}/w500${movie.poster_path}`"
           @play="openTrailer"
+          :data-cy="'movie-card'"
         />
       </div>
 
@@ -117,6 +118,10 @@ async function openTrailer(movieId: number) {
   } else {
     alert('Bu film için YouTube fragmanı bulunamadı.')
   }
+
+  if (!trailer?.key) {
+  console.warn('Video key bulunamadı')
+}
 }
 
 async function selectCategory(key: string) {

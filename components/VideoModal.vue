@@ -31,7 +31,7 @@
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen
-        class="w-full h-full"
+        class="w-full h-full border-2 border-white/30"
       ></iframe>
      
     </div>

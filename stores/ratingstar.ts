@@ -18,7 +18,5 @@ export const useRatingStore = defineStore('rates',  {
             return dateStr ? new Date(dateStr) : null
             }
     },
-    persist: {
-        storage: piniaPluginPersistedstate.localStorage()
-    }
+    persist: true
 })

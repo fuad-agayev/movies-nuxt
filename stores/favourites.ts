@@ -1,4 +1,6 @@
 // stores/favorites.ts
+import { defineStore } from 'pinia'
+
 export const useFavoritesStore = defineStore('favorites', {
   state: () => ({
     favorites: [] as number[] // Sadece ID'leri tut
@@ -12,7 +14,8 @@ export const useFavoritesStore = defineStore('favorites', {
       }
     }
   },
-  persist: {
+  persist:{
     storage: piniaPluginPersistedstate.localStorage()
   }
+  
 })

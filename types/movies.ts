@@ -98,3 +98,15 @@ export interface TmdbItem {
   release_date: string
   overview: string
 }
+
+// In your HeroBanner.spec.ts or a types file
+export interface HeroBannerInstance {
+  showPlayer: boolean
+  videoKey: string
+  showInfo: boolean
+  selectedMovie: Movie | null
+  playMovie: () => Promise<void>
+  openInfoModal: (movie: Movie) => void
+  backdropUrl: string
+  getYear: string
+}

@@ -11,7 +11,8 @@
       <button 
         @click="toggleFavMenu" 
         class="p-1 bg-white/70 w-7 h-7 rounded-full hover:bg-gray-500 transition-colors"
-        aria-label="Movie options"
+        data-test="movie-options-butn"
+        data-testid="movie-options-btn"
       >
         <Icon name="mdi:dots-horizontal" class="text-black/70 text-xl hover:text-white" />
       </button>
@@ -39,6 +40,7 @@
           <button
             @click.stop="toggleWatchlist"
             class="w-full h-10 px-4 py-6 text-black/80 hover:text-white hover:bg-gray-500 flex items-center space-x-2 border-t border-t-gray-300 transition-colors"
+            data-testid="toggle-watchlist-btn"
           >
             <Icon 
               :name="inWatchlist ? 'mdi:bookmark' : 'mdi:bookmark-outline'" 

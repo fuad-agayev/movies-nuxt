@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/color-mode',
-    '@nuxt/icon'
+    '@nuxt/icon',
+     '@nuxt/test-utils/module'
   ],
   colorMode: {
     preference: 'dark',

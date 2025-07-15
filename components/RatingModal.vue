@@ -25,10 +25,9 @@
         <!-- Reset + Yıldızlar -->
         <div class="flex items-center gap-1">
           <button
-            @click="resetRating"
+            @click="resetRating" 
             :disabled="localRating === 0"
             class="text-yellow-300 hover:text-red-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Reset rating"
           >
             <Icon name="mdi:minus-circle-outline" size="16" />
           </button>

@@ -34,6 +34,7 @@
                   type="text"
                   placeholder="Search..."
                   class="w-full h-9 px-4 pr-10 text-sm text-black focus:outline-none"
+                  data-testid="navbar-search-input" 
                 />
                 <Icon
                   name="mdi:magnify"
@@ -89,7 +90,7 @@
             <Icon name="mdi:bookmark-outline" size="1.1em" />
             <span>Watchlist</span>
           </NuxtLink>
-          <button @click="toggleTheme" class="w-8 h-8 flex items-center justify-center rounded border border-gray-500 hover:bg-gray-700 transition">
+          <button @click="toggleTheme" data-testid="theme-toggle" class="w-8 h-8 flex items-center justify-center rounded border border-gray-500 hover:bg-gray-700 transition">
             <Icon v-if="colorMode.value === 'dark'" name="solar:sun-bold" class="text-white" size="1em" />
             <Icon v-else name="lucide:moon-star" class="text-white" size="1em" />
           </button>
@@ -290,7 +291,6 @@ onUnmounted(() => {
 })
 
 </script>
-
 
 
 

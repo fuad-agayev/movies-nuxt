@@ -45,7 +45,7 @@
        <div class="absolute top-1/2 transform -translate-y-1/2 mt-10 left-2 flex items-center justify-center">
       <button
         class="flex items-center justify-center space-x-1 mb-1 w-9 h-9 rounded-full border-2 border-gray-50 hover:border-yellow-500"
-        @click="$emit('play', tv.id)">
+        @click="emit('play', tv.id)">
         <Icon name="mdi:play" class="text-2xl text-white font-bold hover:text-yellow-500" />
          
       </button>

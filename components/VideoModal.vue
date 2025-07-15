@@ -57,7 +57,7 @@ watch(() => props.videoKey, () => {
     videoLoading.value = true
     setTimeout(() => {
       videoLoading.value = false
-    }, 5000)
+    }, 4000)
   }
 })
 </script>

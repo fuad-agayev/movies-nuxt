@@ -82,6 +82,7 @@ const videoKey = ref('')
 const showInfo = ref(false)
 const selectedMovie = ref<Movie | null>(null)
 
+
 // Utilities
 const { fetchVideo } = videoTmdb()
 
@@ -108,7 +109,7 @@ const playMovie = async () => {
   if (!props.movie?.id) return
 
   const res = await fetchVideo(`movie/${props.movie.id}/videos`)
-  const trailer = res?.results.find((v: Video) => v.type === 'Trailer' && v.site === 'YouTube')
+  const trailer = res?.results.find((v:Video) => v.type === 'Trailer' && v.site === 'YouTube')
 
   if (trailer) {
     videoKey.value = trailer.key
@@ -121,4 +122,5 @@ const openInfoModal = (movie: Movie) => {
   selectedMovie.value = movie
   showInfo.value = true
 }
+
 </script>

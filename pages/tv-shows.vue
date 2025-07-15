@@ -35,7 +35,6 @@
 
       <!-- Fragman modalı -->
       <VideoModal
-        v-if="showPlayer"
         :shoow="showPlayer"
         :videoKey="trailerKey"
         @close="showPlayer = false"

@@ -39,6 +39,7 @@
         :videoKey="trailerKey"
         @close="showPlayer = false"
       />
+    <Toast ref="toastRef" />
     </section>
   </div>
 </template>
@@ -49,6 +50,7 @@ import { useRuntimeConfig } from '#imports'
 import { useTmdb } from '~/composables/useTmdb'
 import { videoTmdb } from '~/composables/videoUrlTmdb'
 import TvPageCard from '~/components/TvPageCard.vue'
+import Toast from '~/components/Toast.vue'
 
 const config = useRuntimeConfig()
 const { fetchMovies } = useTmdb() // fetchTVShows olabilir ama reuse edebilirsin
@@ -83,6 +85,12 @@ onMounted(() => {
   fetchMultiplePages(selectedCategory.value)
 })
 
+const toastRef = ref<InstanceType<typeof Toast> | null>(null)
+
+function showToast(msg: string) {
+  toastRef.value?.show(msg)
+}
+
 const allShows = computed(() => show_page.value[selectedCategory.value] || [])
 
 async function openTrailer(tvId: number) {
@@ -98,7 +106,7 @@ async function openTrailer(tvId: number) {
     trailerKey.value = trailer.key
     showPlayer.value = true
   } else {
-    alert('Bu dizi için YouTube fragmanı bulunamadı.')
+    showToast('No YouTube trailer was found for this show.')
   }
 }
 

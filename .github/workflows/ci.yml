@@ -34,11 +34,5 @@ jobs:
       - name: Preview server in background
         run: npm run preview &
 
-      - name: Wait for preview server to be ready
-        uses: jakejarvis/wait-action@v0.2.0
-        with:
-          url: http://localhost:3000
-          timeout: 60
-
       - name: Run Cypress E2E tests
         run: npm run test:e2e

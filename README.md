@@ -1,5 +1,5 @@
 # Nuxt Minimal Starter
-NUFLIX LIVE goto site [Projeyi burada görüntüleyin](https://nuxflix-nu.vercel.app)
+NUFLIX LIVE goto site [Projeyi burada görüntüleyin](https://nuflix-nu.vercel.app)
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup

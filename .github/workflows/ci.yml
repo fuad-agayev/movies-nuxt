@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Unit Tests (Vitest)
+        run: npm run test -- --run
+
+      - name: Build project
+        run: npm run build
+
+      - name: Preview server in background
+        run: npm run preview &
+
+      - name: Wait for preview server to be ready
+        uses: jakejarvis/wait-action@v0.2.0
+        with:
+          url: http://localhost:3000
+          timeout: 60
+
+      - name: Run Cypress E2E tests
+        run: npm run test:e2e

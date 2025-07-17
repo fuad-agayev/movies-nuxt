@@ -14,7 +14,7 @@
     "dev1": "cross-env HOST=0.0.0.0 nuxt dev",
     "dev": "cross-env HOST=localhost nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "nuxt preview -p 3001",
     "postinstall": "nuxt prepare",
     "prepare": "husky install",
     "lint": "eslint . --ext .js,.ts,.vue",

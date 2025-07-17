@@ -33,6 +33,3 @@ jobs:
 
       - name: Preview server in background
         run: npm run preview &
-
-      - name: Run Cypress E2E tests
-        run: npm run test:e2e

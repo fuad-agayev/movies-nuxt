@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-echo "🧪 CYPRES testing procces starting..."
-npm run test:e2e

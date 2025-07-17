@@ -3,8 +3,6 @@
   "extends": "./.nuxt/tsconfig.json",
 
   "compilerOptions": {
-    "types": ["pinia-plugin-persistedstate"],
-  
+    "types": ["pinia-plugin-persistedstate"]
   }
-
 }

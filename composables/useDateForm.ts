@@ -21,7 +21,7 @@ export const useDateFormat = () => {
 
   return { formatDate, timeAgo }
 }
-//!Misal componentde bu composables nasil kulllanilur sonrr a bu aciklamani silersin
+//! Misal componentde bu composables nasil kulllanilur sonrr a bu aciklamani silersin
 /*
 import { useDateFormat } from '~/composables/useDateFormat'
 

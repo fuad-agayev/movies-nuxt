@@ -5,11 +5,7 @@
 </template>
 
 <script setup lang="ts">
-   import WatchDebugger from '../components/WatchDebugger.vue';
+import WatchDebugger from '../components/WatchDebugger.vue'
 </script>
 
-<style scoped>
-
-</style>
-
-
+<style scoped></style>

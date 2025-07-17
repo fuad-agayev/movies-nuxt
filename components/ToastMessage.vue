@@ -1,6 +1,9 @@
 <template>
   <transition name="fade">
-    <div v-if="visible" class="fixed bottom-5 right-5 bg-rose-400 text-black/70 font-bold px-4 py-4 rounded-lg shadow-md">
+    <div
+      v-if="visible"
+      class="fixed bottom-5 right-5 bg-rose-400 text-black/70 font-bold px-4 py-4 rounded-lg shadow-md"
+    >
       {{ message }}
     </div>
   </transition>
@@ -24,10 +27,12 @@ defineExpose({ show })
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.3s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

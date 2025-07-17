@@ -1,4 +1,3 @@
-
 <template>
   <teleport to="#teleModal">
     <div
@@ -10,7 +9,9 @@
         <!-- Title -->
         <h2 class="text-2xl font-bold mb-4 text-black">Rating</h2>
         <h3 class="text-sm mb-10 text-black">
-          <i class="font-semibold"> What did you think of How to Train your {{ movieTitle }}? </i>
+          <i class="font-semibold">
+            What did you think of How to Train your {{ movieTitle }}?
+          </i>
         </h3>
 
         <!-- Slider -->
@@ -20,46 +21,45 @@
             <div
               class="h-full absolute top-0 left-0"
               :style="{
-                        width: `${vibeValue}%`,
-                        background: sliderColor
-                      }"
+                width: `${vibeValue}%`,
+                background: sliderColor,
+              }"
             ></div>
           </div>
 
           <!-- Transparent range input -->
           <input
+            v-model="vibeValue"
             type="range"
             min="0"
             max="100"
             step="10"
-            v-model="vibeValue"
-            class="w-full absolute top-0 left-0 h-2 opacity-0 cursor-pointer "
+            class="w-full absolute top-0 left-0 h-2 opacity-0 cursor-pointer"
           />
 
           <!-- Tooltip/Label -->
           <div
-            class="absolute -top-8 transform -translate-x-1/2 text-xs font-semibold px-2 py-1
-             bg-black text-white border rounded-lg rounded-bl-sm shadow-md"
+            class="absolute -top-8 transform -translate-x-1/2 text-xs font-semibold px-2 py-1 bg-black text-white border rounded-lg rounded-bl-sm shadow-md"
             :style="{ left: `${vibeValue}%` }"
           >
-            
             {{ ratingLabel }}
-            
           </div>
 
-           <!-- Tick marks -->
-  <div class="absolute w-full left-0 top-[8px] flex justify-between pointer-events-none">
-    <span
-      v-for="n in 11"
-      :key="n"
-      class="w-px h-3 bg-gray-400 opacity-50"
-    ></span>
-  </div>
+          <!-- Tick marks -->
+          <div
+            class="absolute w-full left-0 top-[8px] flex justify-between pointer-events-none"
+          >
+            <span
+              v-for="n in 11"
+              :key="n"
+              class="w-px h-3 bg-gray-400 opacity-50"
+            ></span>
+          </div>
 
           <!-- Value markers -->
-  <div class="flex justify-between mt-4 text-[12px] text-gray-500">
-    <span v-for="n in 11" :key="n">{{ (n - 1) * 10 }}</span>
-  </div>
+          <div class="flex justify-between mt-4 text-[12px] text-gray-500">
+            <span v-for="n in 11" :key="n">{{ (n - 1) * 10 }}</span>
+          </div>
         </div>
 
         <!-- Value -->
@@ -72,10 +72,13 @@
 
         <!-- Buttons -->
         <div class="flex justify-between">
-          <button @click="saveVibe" class="px-4 py-2 bg-green-500 text-white rounded">
+          <button
+            class="px-4 py-2 bg-green-500 text-white rounded"
+            @click="saveVibe"
+          >
             Save
           </button>
-          <button @click="clearRating" class="px-4 py-2 text-gray-500">
+          <button class="px-4 py-2 text-gray-500" @click="clearRating">
             Clear my rating 😊
           </button>
         </div>
@@ -87,15 +90,18 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRatingStore } from '~/stores/ratingstar'
+interface Props {
+  visible?: boolean
+  movieId?: number
+  movieTitle?: string
+}
 
-const props = defineProps({
-  visible: Boolean,
-  movieId: Number,
-  movieTitle: {
-    type: String,
-    default: 'the movie'
-  }
+const props = withDefaults(defineProps<Props>(), {
+  visible: false,
+  movieId: 0,
+  movieTitle: 'the movie',
 })
+
 const emit = defineEmits(['close'])
 
 const ratingStore = useRatingStore()
@@ -104,7 +110,7 @@ const vibeValue = ref(77)
 // movieId değişince store'dan veriyi al
 watch(
   () => props.movieId,
-  (id) => {
+  id => {
     if (id) {
       const rating = ratingStore.getRatings(id)
       vibeValue.value = rating ? rating * 20 : 77
@@ -155,11 +161,8 @@ const ratingLabel = computed(() => {
   if (val >= 40) return 'Not Good'
   if (val >= 30) return 'Truly Bad'
   if (val >= 20) return 'Barbage'
-   if (val >= 10) return 'Absolute Trash'
+  if (val >= 10) return 'Absolute Trash'
   if (val >= 0) return 'Dumpster Fire'
   return 'Poor'
 })
-
 </script>
-
-

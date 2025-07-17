@@ -1,8 +1,10 @@
 <template>
-  <div class="text-white dark:text-netflix-black bg-netflix-black dark:bg-white min-h-screen page">
+  <div
+    class="text-white dark:text-netflix-black bg-netflix-black dark:bg-white min-h-screen page"
+  >
     <NuxtLayout>
       <NuxtPage />
-            <div id="teleModal"></div>
+      <div id="teleModal"></div>
     </NuxtLayout>
   </div>
 </template>

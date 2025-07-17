@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useFavoritesStore = defineStore('favorites', {
   state: () => ({
-    favorites: [] as number[] // Sadece ID'leri tut
+    favorites: [] as number[], // Sadece ID'leri tut
   }),
   actions: {
     toggleFavorite(id: number) {
@@ -12,10 +12,9 @@ export const useFavoritesStore = defineStore('favorites', {
       } else {
         this.favorites.push(id)
       }
-    }
+    },
   },
-  persist:{
-    storage: piniaPluginPersistedstate.localStorage()
-  }
-  
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage(),
+  },
 })

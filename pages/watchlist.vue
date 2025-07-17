@@ -19,10 +19,10 @@ const isItemFavorite = (id: number) => {
 }
 
 const filteredItems = computed(() =>
- [...watchlistStore.movies].filter(item => item.type === selectedTab.value).reverse()
+  [...watchlistStore.movies]
+    .filter(item => item.type === selectedTab.value)
+    .reverse()
 )
-
-
 
 const watchRating = useRatingStore()
 
@@ -38,7 +38,6 @@ const closeRatingModal = () => {
   showRatingModal.value = false
   selectedMovieId.value = null
 }
-
 </script>
 <template>
   <div>
@@ -50,7 +49,11 @@ const closeRatingModal = () => {
         <div class="flex gap-6 border-b border-blue-500 mb-6">
           <button
             class="pb-2 border-b-2"
-            :class="selectedTab === 'movie' ? 'border-white' : 'border-transparent text-gray-400'"
+            :class="
+              selectedTab === 'movie'
+                ? 'border-white'
+                : 'border-transparent text-gray-400'
+            "
             @click="selectedTab = 'movie'"
           >
             Movies
@@ -60,7 +63,11 @@ const closeRatingModal = () => {
           </button>
           <button
             class="pb-2 border-b-2"
-            :class="selectedTab === 'tv' ? 'border-white' : 'border-transparent text-gray-400'"
+            :class="
+              selectedTab === 'tv'
+                ? 'border-white'
+                : 'border-transparent text-gray-400'
+            "
             @click="selectedTab = 'tv'"
           >
             TV
@@ -72,7 +79,8 @@ const closeRatingModal = () => {
 
         <!-- Empty State -->
         <div v-if="filteredItems.length === 0" class="text-gray-500 mb-4">
-          No movies  {{ selectedTab === 'movie' ? 'film' : 'shows' }}  have been added yet.
+          No movies {{ selectedTab === 'movie' ? 'film' : 'shows' }} have been
+          added yet.
         </div>
 
         <div
@@ -96,60 +104,80 @@ const closeRatingModal = () => {
               <watchlist-cir-rate :miniscore="item.vote_average" />
 
               <div class="">
-               
                 <h2 class="text-lg font-semibold text-gray-700">
-                              {{ item.type === 'movie' ? item.title : item.name }}
+                  {{ item.type === 'movie' ? item.title : item.name }}
                 </h2>
                 <p class="text-sm text-gray-400">
-                               {{ formatTime(item.type === 'movie' ? item.release_date : item.first_air_date) }}
+                  {{
+                    formatTime(
+                      item.type === 'movie'
+                        ? item.release_date
+                        : item.first_air_date
+                    )
+                  }}
                 </p>
               </div>
             </div>
 
             <!-- Overview -->
-            <p class="text-sm text-gray-600 dark:text-gray-500 mt-2 line-clamp-4">
+            <p
+              class="text-sm text-gray-600 dark:text-gray-500 mt-2 line-clamp-4"
+            >
               {{ item.overview }}
             </p>
 
             <!-- Buttons -->
             <div class="mt-4 flex gap-4 text-sm text-gray-500">
               <!-- Rating Button & Modal Wrapper -->
-<div class="relative">
-  <button
-    @click="openRatingModal(item.id)"
-    class="flex items-center gap-1 transition"
-  >
-    <Icon
-      :name="watchRating.getRatings(item.id) > 0 ? 'mdi:star' : 'mdi:star-outline'"
-      class="text-xl hover:text-gray-500"
-      :class="watchRating.getRatings(item.id) > 0 ? 'text-yellow-500' : 'text-gray-500'"
-    />
-    <span>
-      {{ watchRating.getRatings(item.id) > 0 ? Math.round(watchRating.getRatings(item.id) * 20) + '%' : 'Rate it!' }}
-    </span>
-  </button>
+              <div class="relative">
+                <button
+                  class="flex items-center gap-1 transition"
+                  @click="openRatingModal(item.id)"
+                >
+                  <Icon
+                    :name="
+                      watchRating.getRatings(item.id) > 0
+                        ? 'mdi:star'
+                        : 'mdi:star-outline'
+                    "
+                    class="text-xl hover:text-gray-500"
+                    :class="
+                      watchRating.getRatings(item.id) > 0
+                        ? 'text-yellow-500'
+                        : 'text-gray-500'
+                    "
+                  />
+                  <span>
+                    {{
+                      watchRating.getRatings(item.id) > 0
+                        ? Math.round(watchRating.getRatings(item.id) * 20) + '%'
+                        : 'Rate it!'
+                    }}
+                  </span>
+                </button>
 
-  <!-- Modal burada hemen altında gözükür -->
-  <RatingModal
-    v-if="selectedMovieId === item.id && showRatingModal"
-    :movie-id="item.id"
-    :visible="showRatingModal"
-    @close="closeRatingModal"
-    class="absolute z-50 top-[70px] left-0"
-  />
-</div>
+                <!-- Modal burada hemen altında gözükür -->
+                <RatingModal
+                  v-if="selectedMovieId === item.id && showRatingModal"
+                  :movie-id="item.id"
+                  :visible="showRatingModal"
+                  class="absolute z-50 top-[70px] left-0"
+                  @close="closeRatingModal"
+                />
+              </div>
 
-                     
-  
-             
               <button
-                @click="favoritesStore.toggleFavorite(item.id)"
                 class="flex items-center gap-1 transition"
+                @click="favoritesStore.toggleFavorite(item.id)"
               >
                 <Icon
-                  :name="isItemFavorite(item.id) ? 'mdi:heart' : 'mdi:heart-outline'"
+                  :name="
+                    isItemFavorite(item.id) ? 'mdi:heart' : 'mdi:heart-outline'
+                  "
                   class="text-lg"
-                  :class="isItemFavorite(item.id) ? 'text-rose-500' : 'text-gray-500'"
+                  :class="
+                    isItemFavorite(item.id) ? 'text-rose-500' : 'text-gray-500'
+                  "
                 />
                 Favorite
               </button>
@@ -166,10 +194,10 @@ const closeRatingModal = () => {
         </div>
 
         <div v-if="filteredItems.length > 0" class="mt-6 text-gray-500 text-sm">
-          Total {{ filteredItems.length }} {{ selectedTab === 'movie' ? 'film' : 'dizi' }}.
+          Total {{ filteredItems.length }}
+          {{ selectedTab === 'movie' ? 'film' : 'dizi' }}.
         </div>
       </div>
-     
     </ClientOnly>
   </div>
 </template>

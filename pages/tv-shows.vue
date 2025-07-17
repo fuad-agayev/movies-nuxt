@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <section class="p-6 dark:bg-black/80 bg-white text-gray-400">
@@ -7,13 +6,13 @@
         <button
           v-for="cat in categories"
           :key="cat.key"
-          @click="selectCategory(cat.key)"
           :class="[
             'px-2 py-1 text-xs sm:px-3 sm:text-sm md:px-4 md:text-base font-bold transition',
             cat.key === selectedCategory
               ? 'border-b-2 border-indigo-300 text-gray-400'
-              : 'text-black/70 hover:bg-white/10'
+              : 'text-black/70 hover:bg-white/10',
           ]"
+          @click="selectCategory(cat.key)"
         >
           {{ cat.label }}
         </button>
@@ -21,8 +20,7 @@
 
       <!-- TV Kartları -->
       <div
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6
-               gap-x-2 gap-y-6 mx-auto max-w-screen-xl"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-6 mx-auto max-w-screen-xl"
       >
         <TvPageCard
           v-for="tv in allShows"
@@ -36,10 +34,10 @@
       <!-- Fragman modalı -->
       <VideoModal
         :shoow="showPlayer"
-        :videoKey="trailerKey"
+        :video-key="trailerKey"
         @close="showPlayer = false"
       />
-    <Toast ref="toastRef" />
+      <ToastMessage ref="toastRef" />
     </section>
   </div>
 </template>
@@ -50,13 +48,13 @@ import { useRuntimeConfig } from '#imports'
 import { useTmdb } from '~/composables/useTmdb'
 import { videoTmdb } from '~/composables/videoUrlTmdb'
 import TvPageCard from '~/components/TvPageCard.vue'
-import Toast from '~/components/Toast.vue'
+import ToastMessage from '~/components/ToastMessage.vue'
 
 const config = useRuntimeConfig()
 const { fetchMovies } = useTmdb() // fetchTVShows olabilir ama reuse edebilirsin
 const { fetchVideo } = videoTmdb()
 
-const show_page = ref<Record<string, any[]>>({})
+const showPage = ref<Record<string, any[]>>({})
 const showPlayer = ref(false)
 const trailerKey = ref('')
 const selectedCategory = ref('popular')
@@ -64,7 +62,7 @@ const categories = [
   { key: 'popular', endpoint: 'tv/popular', label: 'POPULAR' },
   { key: 'airing_today', endpoint: 'tv/airing_today', label: 'AIRING TODAY' },
   { key: 'on_the_air', endpoint: 'tv/on_the_air', label: 'ON AIR' },
-  { key: 'top_rated', endpoint: 'tv/top_rated', label: 'TOP RATED' }
+  { key: 'top_rated', endpoint: 'tv/top_rated', label: 'TOP RATED' },
 ]
 
 const pagesToLoad = 5
@@ -78,20 +76,20 @@ async function fetchMultiplePages(key: string, pagesCount = pagesToLoad) {
 
   const results = await Promise.all(promises)
   const combined = results.flatMap(r => r.results || r)
-  show_page.value[key] = combined
+  showPage.value[key] = combined
 }
 
 onMounted(() => {
   fetchMultiplePages(selectedCategory.value)
 })
 
-const toastRef = ref<InstanceType<typeof Toast> | null>(null)
+const toastRef = ref<InstanceType<typeof ToastMessage> | null>(null)
 
 function showToast(msg: string) {
   toastRef.value?.show(msg)
 }
 
-const allShows = computed(() => show_page.value[selectedCategory.value] || [])
+const allShows = computed(() => showPage.value[selectedCategory.value] || [])
 
 async function openTrailer(tvId: number) {
   trailerKey.value = ''
@@ -112,7 +110,7 @@ async function openTrailer(tvId: number) {
 
 async function selectCategory(key: string) {
   selectedCategory.value = key
-  if (!show_page.value[key]?.length) {
+  if (!showPage.value[key]?.length) {
     await fetchMultiplePages(key)
   }
 }

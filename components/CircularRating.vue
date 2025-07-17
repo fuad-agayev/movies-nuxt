@@ -35,7 +35,8 @@ const props = defineProps<{
 const percentage = (props.score / 10) * 100
 
 // SVG çember path
-const circlePath = 'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
+const circlePath =
+  'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
 
 // Puanın rengine göre renk seçimi
 const scoreFillColor =

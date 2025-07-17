@@ -1,12 +1,10 @@
-
-
 // stores/watchlist.ts
 import { defineStore } from 'pinia'
-import type { Movie, TvShow } from '~/types/movies'
+import type { Movie } from '~/types/movies'
 
 export const useWatchListStore = defineStore('watchlist', {
   state: () => ({
-    movies: [] as Movie[]
+    movies: [] as Movie[],
   }),
   actions: {
     addMovie(movie: Movie) {
@@ -14,11 +12,11 @@ export const useWatchListStore = defineStore('watchlist', {
         this.movies.push(movie)
       }
     },
-    
+
     removeMovie(movieId: number) {
       this.movies = this.movies.filter(m => m.id !== movieId)
     },
-    
+
     toggleMovie(movie: Movie) {
       const exists = this.movies.some(m => m.id === movie.id)
       if (exists) {
@@ -30,11 +28,11 @@ export const useWatchListStore = defineStore('watchlist', {
 
     isInWatchlist(movieId: number) {
       return this.movies.some(m => m.id === movieId)
-    }
+    },
   },
   persist: {
-    storage: piniaPluginPersistedstate.localStorage()
-  }
+    storage: piniaPluginPersistedstate.localStorage(),
+  },
 })
 
 //* IF YOU DO NOT USE the `pinia-plugin-persistedstate` MODULE:

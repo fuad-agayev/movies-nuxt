@@ -1,4 +1,3 @@
-
 /// <reference types="cypress" />
 
 describe('Theme toggle - html class kontrolü', () => {
@@ -21,4 +20,3 @@ describe('Theme toggle - html class kontrolü', () => {
     cy.get('html').should('have.class', 'dark')
   })
 })
-

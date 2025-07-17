@@ -13,10 +13,10 @@ const props = withDefaults(
 
 /* kırılım noktaları */
 const breakpoints: CarouselBreakpoints = {
-  640:  { itemsToShow: 1.5, snapAlign: 'start' },   // ≥ sm
-  768:  { itemsToShow: 2.5, snapAlign: 'start' },   // ≥ md
-  1024: { itemsToShow: 3.5, snapAlign: 'start' },   // ≥ lg
-  1280: { itemsToShow: 4.5, snapAlign: 'start' }    // ≥ xl
+  640: { itemsToShow: 1.5, snapAlign: 'start' },
+  768: { itemsToShow: 2.5, snapAlign: 'start' },
+  1024: { itemsToShow: 3.5, snapAlign: 'start' },
+  1280: { itemsToShow: 4.5, snapAlign: 'start' },
 }
 </script>
 
@@ -34,7 +34,9 @@ const breakpoints: CarouselBreakpoints = {
       class="px-2"
     >
       <Slide v-for="v in videos" :key="v.id" class="px-1">
-        <div class="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl overflow-hidden shadow-lg">
+        <div
+          class="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl overflow-hidden shadow-lg"
+        >
           <iframe
             :src="`https://www.youtube.com/embed/${v.key}`"
             class="w-full h-full object-cover"
@@ -54,32 +56,35 @@ const breakpoints: CarouselBreakpoints = {
 /*--------------------------------------------------------------*/
 /* NAVİGASYON DÜĞMESİ TEMEL STİLİNİZ (AYNEN KORUNDU)            */
 :deep(.carousel__prev),
-:deep(.carousel__next){
-  width:50px; height:70px;
-  font-size:1.4rem;
-  border:1px solid white;
-  border-radius:5px;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(0,0,0,.5); color:#fff;
-  transition:background .2s;
-  margin:4px;
+:deep(.carousel__next) {
+  width: 50px;
+  height: 70px;
+  font-size: 1.4rem;
+  border: 1px solid white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  transition: background 0.2s;
+  margin: 4px;
   /* --- EKLEDİKLERİM --- */
-  z-index: 50;          /* iframe’in üstünde kal */
-  cursor: pointer;      /* el ikonu çıksın */
+  z-index: 50; /* iframe’in üstünde kal */
+  cursor: pointer; /* el ikonu çıksın */
   pointer-events: auto; /* emin olalım */
 }
 :deep(.carousel__prev:hover),
-:deep(.carousel__next:hover){
-  background:rgba(0,0,0,.3);
-  color:yellow;
+:deep(.carousel__next:hover) {
+  background: rgba(0, 0, 0, 0.3);
+  color: yellow;
 }
-
 
 :deep(.carousel__prev[disabled]),
 :deep(.carousel__next[disabled]),
-:deep(.carousel__prev[aria-disabled="true"]),
-:deep(.carousel__next[aria-disabled="true"]){
-  display:none !important;   /* tamamen ortadan kaldır */
+:deep(.carousel__prev[aria-disabled='true']),
+:deep(.carousel__next[aria-disabled='true']) {
+  display: none !important; /* tamamen ortadan kaldır */
 }
 
 /* Küçük ekranlar: 640px altı (mobil) */
@@ -93,7 +98,4 @@ const breakpoints: CarouselBreakpoints = {
     margin: 2px;
   }
 }
-
 </style>
-
-

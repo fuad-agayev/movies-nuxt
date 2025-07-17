@@ -3,7 +3,7 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 import { describe, it, expect } from 'vitest'
 import NavBar from '@/components/NavBar.vue'
 
-const routes:any = [
+const routes: any = [
   { path: '/', name: 'home' },
   { path: '/films', name: 'films' },
   { path: '/tv-shows', name: 'tv-shows' },
@@ -31,7 +31,7 @@ describe('NuxtLink active class behavior', async () => {
 
   it('applies active class to the correct link', () => {
     const links = wrapper.findAll('a')
-    const filmsLink = links.find((a) => a.text().includes('Movies'))
+    const filmsLink = links.find(a => a.text().includes('Movies'))
     expect(filmsLink?.classes()).toContain('font-bold')
     expect(filmsLink?.classes()).toContain('text-yellow-400')
   })

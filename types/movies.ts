@@ -16,10 +16,10 @@ export interface Movie {
 
 export interface TvShow {
   id: number
-  name: string              // Dizinin adı
-  original_name?: string    // Orijinal adı (isteğe bağlı)
+  name: string // Dizinin adı
+  original_name?: string // Orijinal adı (isteğe bağlı)
   overview: string
-  first_air_date: string    // İlk yayın tarihi
+  first_air_date: string // İlk yayın tarihi
   poster_path: string | null
   backdrop_path: string | null
   vote_average: number
@@ -69,7 +69,6 @@ export interface CarouselBreakpoints {
   }
 }
 
-
 export interface SearchResult {
   id: number
   media_type: string
@@ -79,10 +78,10 @@ export interface SearchResult {
   profile_path?: string
   vote_average?: number
 }
- 
+
 export type FilterOption = {
-  key: string,
-  label: string,
+  key: string
+  label: string
   icon: string
 }
 

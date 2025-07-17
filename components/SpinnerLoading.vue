@@ -6,7 +6,7 @@
       class="dot"
       :style="{
         transform: `rotate(${(n - 1) * 15}deg) translate(0, -8px)`,
-        animationDelay: `${(n - 1) * 0.05}s`
+        animationDelay: `${(n - 1) * 0.05}s`,
       }"
     ></div>
   </div>
@@ -22,7 +22,7 @@
 
 .dot {
   width: 10px;
-  height:10px;
+  height: 10px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   position: absolute;
@@ -34,15 +34,14 @@
 }
 
 @keyframes pulseDot {
-  0%, 100% {
+  0%,
+  100% {
     background: rgba(255, 255, 255, 0.1);
   }
-  40%, 60% {
+  40%,
+  60% {
     background: rgba(255, 255, 255, 0.7);
     filter: blur(0px);
   }
 }
 </style>
-
-
-

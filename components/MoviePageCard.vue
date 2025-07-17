@@ -1,9 +1,10 @@
 <template>
-  <div class="relative group bg-black/80 rounded-lg overflow-hidden shadow-lg w-full max-w-[200px] mx-auto border border-black/50 transition duration-300">
-     <!-- ②  Hover overlay -->
+  <div
+    class="relative group bg-black/80 rounded-lg overflow-hidden shadow-lg w-full max-w-[200px] mx-auto border border-black/50 transition duration-300"
+  >
+    <!-- ②  Hover overlay -->
     <div
-      class="absolute inset-0 bg-black/0 group-hover:bg-black/40
-             transition duration-300 pointer-events-none z-0"
+      class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition duration-300 pointer-events-none z-0"
     ></div>
     <img
       :src="imj"
@@ -20,48 +21,46 @@
         {{ movie.title }}
       </p>
 
-       <!-- Tarih -->
+      <!-- Tarih -->
       <p class="text-xs text-gray-400 mt-0.5">
         {{ formatTime(movie.release_date) }}
       </p>
 
       <!-- Butonlar -->
       <div class="flex flex-col space-y-2 text-sm">
-        <button class="bg-[#1f1f1f] rounded-lg px-2 text-indigo-400 py-1 hover:bg-[#333]"
-        @click.stop="toggle"        
-  :class="[
-    'rounded-lg px-2 py-1 text-sm transition',
-    inList ? 'text-indigo-300' : 'bg-[#1f1f1f] hover:bg-[#333]'
-  ]"
+        <button
+          class="bg-[#1f1f1f] rounded-lg px-2 text-indigo-400 py-1 hover:bg-[#333]"
+          :class="[
+            'rounded-lg px-2 py-1 text-sm transition',
+            inList ? 'text-indigo-300' : 'bg-[#1f1f1f] hover:bg-[#333]',
+          ]"
+          @click.stop="toggle"
         >
-        <template v-if="showWatchlist">
-    <SpinnerWatchlist class="py-2" />
-  </template>
-  <template v-else>
-    <span v-if="inList" class="px-2 text-sm">✓ Watchlist</span>
-    <span v-else>+ Watchlist</span>
-  </template>
-
-
-       
+          <template v-if="showWatchlist">
+            <SpinnerWatchlist class="py-2" />
+          </template>
+          <template v-else>
+            <span v-if="inList" class="px-2 text-sm">✓ Watchlist</span>
+            <span v-else>+ Watchlist</span>
+          </template>
         </button>
 
-        <button class="px-2 py-1 text-white hover:bg-[#333] rounded-lg flex items-center justify-center" @click="$emit('play', movie.id)">
+        <button
+          class="px-2 py-1 text-white hover:bg-[#333] rounded-lg flex items-center justify-center"
+          @click="$emit('play', movie.id)"
+        >
           <Icon name="mdi:play" class="mr-2 text-xl" /> Trailer
         </button>
-       
       </div>
     </div>
-   
   </div>
 </template>
 
-
 <script setup lang="ts">
+import SpinnerWatchlist from './SpinnerWatchlist.vue'
 import { useWatchListStore } from '~/stores/watchlist'
 import type { Movie } from '~/types/movies'
 import { formatTime } from '~/utils/formatDatee'
-import SpinnerWatchlist from './SpinnerWatchlist.vue'
 const watchlistStore = useWatchListStore()
 
 const store = useWatchListStore()
@@ -69,8 +68,7 @@ const showWatchlist = ref(false)
 /* mevcut film listede mi? */
 const inList = computed(() => store.isInWatchlist(props.movie.id))
 
-
-async function toggle() {
+function toggle() {
   if (showWatchlist.value) return
 
   showWatchlist.value = true
@@ -83,9 +81,7 @@ async function toggle() {
 
 const props = defineProps<{
   movie: Movie
-  imj: string,
-  
+  imj: string
 }>()
-const emit = defineEmits<{ (e:'play', id: number): void }>()
+const emit = defineEmits<{ (e: 'play', id: number): void }>()
 </script>
-

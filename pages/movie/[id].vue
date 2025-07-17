@@ -7,16 +7,15 @@ import { useWatchListStore } from '~/stores/watchlist'
 import { useFavoritesStore } from '~/stores/favourites'
 import { useRatingStore } from '~/stores/ratingstar'
 import VibeModal from '~/components/VibeModal.vue'
-//import { useTvShows } from '~/composables/useTvShows'
+// import { useTvShows } from '~/composables/useTvShows'
 
-//const { fetchTv } = useTvShows()
+// const { fetchTv } = useTvShows()
 const { fetchMovies } = useTmdb()
 const { fetchVideo } = videoTmdb()
 const route = useRoute()
 const config = useRuntimeConfig()
 const watchlistStore = useWatchListStore()
 const favoritesStore = useFavoritesStore()
-
 
 const movie = ref<any>(null)
 const trailerKey = ref('')
@@ -36,7 +35,9 @@ onMounted(async () => {
     castList.value = credits.cast
 
     const videoRes = await fetchVideo(`movie/${movieId}/videos`)
-    const trailer = videoRes?.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
+    const trailer = videoRes?.results.find(
+      (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+    )
     trailerKey.value = trailer?.key || ''
   } catch (error) {
     console.error('Error fetching movie details:', error)
@@ -44,16 +45,20 @@ onMounted(async () => {
 })
 
 // Favorites functionality
-const isFavorite = computed<boolean>(() => favoritesStore.favorites.includes(movie.value?.id))
+const isFavorite = computed<boolean>(() =>
+  favoritesStore.favorites.includes(movie.value?.id)
+)
 
 const toggleFavorites = () => {
   if (!movie.value?.id) return
   favoritesStore.toggleFavorite(movie.value.id)
 }
 
-// Watchlist functionality   
+// Watchlist functionality
 // BU ISLEM FILMCARD daki gibi STOREDEN TOGGLE MOVIE ve ISINWATCHLIST GETIRMEKLE DE YAPMAK OLUR  BOYLEDE KALSIN DIYE SAKLADIM
-const inWatchlist = computed(() => watchlistStore.movies.some(item => item.id === movie.value?.id))
+const inWatchlist = computed(() =>
+  watchlistStore.movies.some(item => item.id === movie.value?.id)
+)
 
 const toggleWatchlist = () => {
   try {
@@ -69,7 +74,7 @@ const toggleWatchlist = () => {
   }
 }
 
-const ratingStore = useRatingStore();
+const ratingStore = useRatingStore()
 const ratingUser = computed(() => {
   return ratingStore.getRatings(movie.value?.id || 0)
 })
@@ -85,35 +90,45 @@ const getRatingColor = (percent: number) => {
   :class="getRatingColor(userRating * 20)"
 */
 
-const formatRuntime = (mins: number) => `${Math.floor(mins / 60)}h ${mins % 60}m`
+const formatRuntime = (mins: number) =>
+  `${Math.floor(mins / 60)}h ${mins % 60}m`
 
 /* META TAGS */
 useHead(() => ({
   title: movie.value?.name ? `Dizi: ${movie.value.name}` : 'Dizi Yükleniyor…',
   meta: [
-    { name: 'description',       content: movie.value?.overview || 'Dizi açıklaması bulunamadı.' },
+    {
+      name: 'description',
+      content: movie.value?.overview || 'Dizi açıklaması bulunamadı.',
+    },
     { property: 'og:description', content: movie.value?.overview || '' },
     {
       property: 'og:image',
-      content: movie.value?.poster_path ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}` : ''
+      content: movie.value?.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}`
+        : '',
     },
-    { name: 'twitter:title',  content: movie.value?.title || 'Dizi' },
+    { name: 'twitter:title', content: movie.value?.title || 'Dizi' },
     {
       name: 'twitter:image',
-      content: movie.value?.poster_path ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}` : ''
-    }
-  ]
+      content: movie.value?.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.value.poster_path}`
+        : '',
+    },
+  ],
 }))
 
 // BU OBJE DIR DINAMIKLIK SAGLAMAZ ONCE NE DEYER VERDINSE SABIR OLARAK ONU GOSTERIR
-//useHead({
+// useHead({
 // title: movie.value?.title ? Film: ${movie.value.title} : 'Film Yükleniyor...'
-//})
+// })
 </script>
 
 <template>
   <div>
-    <section class="text-white px-4 py-8 bg-cover bg-center relative overflow-hidden">
+    <section
+      class="text-white px-4 py-8 bg-cover bg-center relative overflow-hidden"
+    >
       <div
         class="absolute top-0 right-0 h-full w-3/5 bg-cover bg-center blur-sm opacity-30 scale-110 z-0"
         :style="
@@ -124,7 +139,10 @@ useHead(() => ({
       ></div>
       <div class="absolute inset-0 bg-black bg-opacity-70"></div>
 
-      <div v-if="movie" class="relative z-10 max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+      <div
+        v-if="movie"
+        class="relative z-10 max-w-6xl mx-auto grid md:grid-cols-3 gap-10"
+      >
         <div class="w-full flex justify-center md:justify-start items-center">
           <img
             :src="`${config.public.imageBaseUrl}/w500${movie.poster_path}`"
@@ -136,21 +154,29 @@ useHead(() => ({
         <div class="col-span-2 flex flex-col justify-center">
           <h1 class="text-4xl font-bold mb-2">
             {{ movie.title }}
-            <span class="text-2xl text-gray-400">({{ movie.release_date?.slice(0, 4) }})</span>
+            <span class="text-2xl text-gray-400"
+              >({{ movie.release_date?.slice(0, 4) }})</span
+            >
           </h1>
           <p>
-            <strong>Genres:</strong> {{ movie.genres.map((g: any) => g.name).join(', ') }}
-            <span class="text-sm text-gray-400">{{ formatRuntime(movie.runtime) }}</span>
+            <strong>Genres:</strong>
+            {{ movie.genres.map((g: any) => g.name).join(', ') }}
+            <span class="text-sm text-gray-400">{{
+              formatRuntime(movie.runtime)
+            }}</span>
           </p>
 
           <!-- Rating and Play Trailer -->
           <div class="flex items-center gap-4 mb-4 mt-4">
-            <CircularRating :score="movie?.vote_average || 0" class="hover:scale-105" />
+            <CircularRating
+              :score="movie?.vote_average || 0"
+              class="hover:scale-105"
+            />
 
             <button
               v-if="trailerKey"
-              @click="showPlayer = true"
               class="inline-flex items-center hover:text-white/20 text-white text-sm font-semibold px-4 py-2 rounded shadow-xl transition-colors"
+              @click="showPlayer = true"
             >
               <Icon name="mdi:play" class="mr-2 text-xl" /> Play Trailer
             </button>
@@ -161,8 +187,8 @@ useHead(() => ({
             <!-- Bookmark Button -->
             <div class="relative group">
               <button
-                @click="toggleWatchlist"
                 class="flex items-center p-2 rounded hover:bg-gray-700 transition-colors"
+                @click="toggleWatchlist"
               >
                 <Icon
                   :name="inWatchlist ? 'mdi:bookmark' : 'mdi:bookmark-outline'"
@@ -179,12 +205,16 @@ useHead(() => ({
             <!-- Favorite Button -->
             <div class="relative group">
               <button
-                @click="toggleFavorites"
                 class="flex items-center p-2 rounded hover:bg-gray-700 transition-colors"
+                @click="toggleFavorites"
               >
                 <Icon
                   :name="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'"
-                  :class="isFavorite ? 'text-rose-500 text-2xl' : 'text-white text-2xl'"
+                  :class="
+                    isFavorite
+                      ? 'text-rose-500 text-2xl'
+                      : 'text-white text-2xl'
+                  "
                   class="transition-all duration-300 hover:scale-110"
                 />
               </button>
@@ -195,35 +225,55 @@ useHead(() => ({
               </div>
             </div>
             <!-- User Rating Display -->
-<div v-if="ratingUser > 0" @click="showVibeModal = true"
-  class="flex items-center justify-center gap-x-2 text-sm text-gray-400 w-[180px] h-10 border border-white/50 rounded-xl text-center py-2 bg-white/20 shadow-xl"
-  >
-  <button>
-    <span class="text-white font-semibold"> Your Vibe </span>
-  <span class="text-white px-1"> {{ Math.round(ratingUser) }}/5 </span>
-  <span class="gap-4" :class="[ratingUser * 20 <= 30 ? 'text-rose-400' : ratingUser * 20 <= 60 ? 'text-yellow-400' : 'text-green-500' ]">
-     {{ (ratingUser * 20) }}%
-  </span>
-   </button>
-</div>
-<div v-else  @click="showVibeModal = true" class="text-sm font-semibold text-white w-[150px] h-10 cursor-pointer border border-white rounded-xl text-center py-2 bg-white/20">
-  Whats's your Vibe ?
-</div>
-
+            <div
+              v-if="ratingUser > 0"
+              class="flex items-center justify-center gap-x-2 text-sm text-gray-400 w-[180px] h-10 border border-white/50 rounded-xl text-center py-2 bg-white/20 shadow-xl"
+              @click="showVibeModal = true"
+            >
+              <button>
+                <span class="text-white font-semibold"> Your Vibe </span>
+                <span class="text-white px-1">
+                  {{ Math.round(ratingUser) }}/5
+                </span>
+                <span
+                  class="gap-4"
+                  :class="[
+                    ratingUser * 20 <= 30
+                      ? 'text-rose-400'
+                      : ratingUser * 20 <= 60
+                        ? 'text-yellow-400'
+                        : 'text-green-500',
+                  ]"
+                >
+                  {{ ratingUser * 20 }}%
+                </span>
+              </button>
+            </div>
+            <div
+              v-else
+              class="text-sm font-semibold text-white w-[150px] h-10 cursor-pointer border border-white rounded-xl text-center py-2 bg-white/20"
+              @click="showVibeModal = true"
+            >
+              Whats's your Vibe ?
+            </div>
           </div>
 
           <p class="text-lg text-gray-300 italic mb-4">{{ movie.tagline }}</p>
           <h4 class="text-xl text-gray-200 font-semibold">Overview</h4>
-          <p class="mb-6 text-base text-gray-400 leading-relaxed">{{ movie.overview }}</p>
+          <p class="mb-6 text-base text-gray-400 leading-relaxed">
+            {{ movie.overview }}
+          </p>
 
           <!-- Movie details -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p class="text-sm font-bold text-gray-200">
-                Status: <span class="ml-2 text-gray-400">{{ movie.status }}</span>
+                Status:
+                <span class="ml-2 text-gray-400">{{ movie.status }}</span>
               </p>
               <p class="text-sm font-bold text-gray-200">
-                Director: <span class="text-gray-400 ml-2">{{ directorName }}</span>
+                Director:
+                <span class="text-gray-400 ml-2">{{ directorName }}</span>
               </p>
               <p class="text-sm text-gray-400 font-bold mt-2">
                 <strong class="text-gray-200">Languages:</strong>
@@ -232,7 +282,9 @@ useHead(() => ({
             </div>
             <div>
               <p class="text-gray-400 text-sm font-bold">
-                <strong class="text-gray-200">Budget:</strong> ${{ movie.budget.toLocaleString() }}
+                <strong class="text-gray-200">Budget:</strong> ${{
+                  movie.budget.toLocaleString()
+                }}
               </p>
               <p class="text-gray-400 text-sm font-bold mt-2">
                 <strong class="text-gray-200">Revenue:</strong> ${{
@@ -241,25 +293,36 @@ useHead(() => ({
               </p>
               <p class="text-gray-400 text-sm font-bold mt-2">
                 <strong class="text-gray-200">Countries:</strong>
-                {{ movie.production_countries.map((c: any) => c.name).join(', ') }}
+                {{
+                  movie.production_countries.map((c: any) => c.name).join(', ')
+                }}
               </p>
               <p v-if="movie.homepage" class="mt-2">
                 <strong class="text-gray-200">Homepage:</strong>
-                <a :href="movie.homepage" class="text-blue-400 underline" target="_blank">Visit</a>
+                <a
+                  :href="movie.homepage"
+                  class="text-blue-400 underline"
+                  target="_blank"
+                  >Visit</a
+                >
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <VideoModal :shoow="showPlayer" :videoKey="trailerKey" @close="showPlayer = false" />
-      <VibeModal v-if="movie"
-  :visible="showVibeModal"
-  :movie-id="movie?.id"
-  :movie-title="movie?.title"
-  @close="showVibeModal = false"
-/>
-
+      <VideoModal
+        :shoow="showPlayer"
+        :video-key="trailerKey"
+        @close="showPlayer = false"
+      />
+      <VibeModal
+        v-if="movie"
+        :visible="showVibeModal"
+        :movie-id="movie?.id"
+        :movie-title="movie?.title"
+        @close="showVibeModal = false"
+      />
     </section>
 
     <!-- Cast Section -->
@@ -289,7 +352,6 @@ useHead(() => ({
         </div>
       </div>
     </div>
-   
   </div>
 </template>
 
@@ -355,4 +417,3 @@ useHead(() => ({
   border-radius: 9999px;
 }
 </style>
-

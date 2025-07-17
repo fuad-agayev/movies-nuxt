@@ -1,4 +1,3 @@
-
 import { useRuntimeConfig } from '#imports'
 import type { TvShow, TvShowApiResponse } from '~/types/movies'
 
@@ -12,8 +11,8 @@ export const useTvShows = () => {
         {
           params: {
             api_key: config.public.apiKey,
-            language: 'en-US' // Dil parametresi ekleyebilirsiniz
-          }
+            language: 'en-US', // Dil parametresi ekleyebilirsiniz
+          },
         }
       )
       return res.results ?? []

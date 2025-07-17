@@ -7,7 +7,8 @@
       <h3 class="font-semibold text-red-600">⚠️ Invalid Items</h3>
       <ul class="list-disc ml-5">
         <li v-for="item in invalidItems" :key="item.id">
-          ID: {{ item.id }} | Title: {{ item.title || 'N/A' }} | Type: {{ item.type || '❌ missing' }}
+          ID: {{ item.id }} | Title: {{ item.title || 'N/A' }} | Type:
+          {{ item.type || '❌ missing' }}
         </li>
       </ul>
     </div>

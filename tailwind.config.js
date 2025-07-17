@@ -5,7 +5,7 @@ export default {
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
-    './app.vue'
+    './app.vue',
   ],
   darkMode: 'class',
   theme: {
@@ -16,29 +16,29 @@ export default {
         'netflix-dark': '#181818',
         'netflix-light-dark': '#2F2F2F',
         'netflix-gray': '#808080',
-        'netflix-light-gray': '#b3b3b3'
+        'netflix-light-gray': '#b3b3b3',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif']
+        sans: ['Inter', 'sans-serif'],
       },
       screens: {
-        xs: '475px'
+        xs: '475px',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-in-out'
+        'slide-up': 'slideUp 0.5s ease-in-out',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
+          '100%': { opacity: '1' },
         },
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' }
-        }
-      }
-    }
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 }

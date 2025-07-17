@@ -1,5 +1,3 @@
-
-
 /// <reference types="cypress" />
 
 describe('Watchlist Add & Remove E2E Test', () => {
@@ -24,7 +22,7 @@ describe('Watchlist Add & Remove E2E Test', () => {
     cy.contains('Remove').click()
 
     // Film listede olmamalı
-   
+
     cy.get('.text-lg.font-semibold').should('not.exist')
   })
 })

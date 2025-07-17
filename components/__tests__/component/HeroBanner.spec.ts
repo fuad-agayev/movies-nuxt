@@ -1,4 +1,3 @@
-
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { Movie } from '@/types/movies'
@@ -22,36 +21,35 @@ const fakeMovie: Movie = {
 describe('HeroBanner', () => {
   it('renders movie title', () => {
     const wrapper = mount(HeroBanner, {
-      props: { movie: fakeMovie }
+      props: { movie: fakeMovie },
     })
     expect(wrapper.text()).toContain('Test Movie')
   })
 
   it('renders movie overview', () => {
     const wrapper = mount(HeroBanner, {
-      props: { movie: fakeMovie }
+      props: { movie: fakeMovie },
     })
     expect(wrapper.text()).toContain('A great movie')
   })
 
   it('displays match percentage', () => {
     const wrapper = mount(HeroBanner, {
-      props: { movie: fakeMovie }
+      props: { movie: fakeMovie },
     })
     expect(wrapper.text()).toContain('75% Match')
   })
 
-  
   it('displays HD badge', () => {
     const wrapper = mount(HeroBanner, {
-      props: { movie: fakeMovie }
+      props: { movie: fakeMovie },
     })
     expect(wrapper.text()).toContain('HD')
   })
 
   it('has Play and More Info buttons', () => {
     const wrapper = mount(HeroBanner, {
-      props: { movie: fakeMovie }
+      props: { movie: fakeMovie },
     })
 
     const buttons = wrapper.findAll('button')
@@ -61,31 +59,28 @@ describe('HeroBanner', () => {
   })
 
   it('applies responsive title class', () => {
-  const wrapper = mount(HeroBanner, {
-    props: { movie: fakeMovie }
+    const wrapper = mount(HeroBanner, {
+      props: { movie: fakeMovie },
+    })
+
+    const title = wrapper.find('h1')
+    expect(title.classes()).toContain('text-3xl')
   })
 
-  const title = wrapper.find('h1')
-  expect(title.classes()).toContain('text-3xl')
-})
+  it('opens InfoModal when More Info button is clicked', async () => {
+    const wrapper = mount(HeroBanner, {
+      props: { movie: fakeMovie },
+      global: {
+        stubs: {
+          InfoModal: {
+            template: '<div class="info-modal-stub">Modal!</div>',
+          },
+        },
+      },
+    })
 
+    await wrapper.findAll('button')[1].trigger('click')
 
-it('opens InfoModal when More Info button is clicked', async () => {
-  const wrapper = mount(HeroBanner, {
-  props: { movie: fakeMovie },
-  global: {
-    stubs: {
-      InfoModal: {
-        template: '<div class="info-modal-stub">Modal!</div>'
-      }
-    }
-  }
-})
-
-await wrapper.findAll('button')[1].trigger('click')
-
-expect(wrapper.html()).toContain('Modal!')
-})
-
-
+    expect(wrapper.html()).toContain('Modal!')
+  })
 })

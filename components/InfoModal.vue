@@ -1,17 +1,17 @@
 <template>
   <div
     v-if="showw"
-    @click.self="$emit('close')"
     class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-4"
-     data-cy="info-modal"
+    data-cy="info-modal"
+    @click.self="$emit('close')"
   >
     <div
       class="relative bg-transparent text-white rounded-lg shadow-lg w-full max-w-2xl overflow-hidden border border-white/20"
     >
       <!-- Close Button -->
       <button
-        @click="$emit('close')"
         class="absolute top-3 right-3 text-white text-2xl hover:text-red-400 transition"
+        @click="$emit('close')"
       >
         <Icon name="mdi:close" />
       </button>
@@ -33,9 +33,14 @@
           </p>
           <ul class="text-sm space-y-1">
             <li><strong>Release:</strong> {{ movie.release_date }}</li>
-            <li><strong>Rating:</strong> {{ Math.round((movie?.vote_average || 0) * 10) }}%</li>
+            <li>
+              <strong>Rating:</strong>
+              {{ Math.round((movie?.vote_average || 0) * 10) }}%
+            </li>
             <li><strong>Language:</strong> {{ movie.original_language }}</li>
-            <li><strong>Popularity:</strong> {{ movie.popularity.toFixed(2) }}</li>
+            <li>
+              <strong>Popularity:</strong> {{ movie.popularity.toFixed(2) }}
+            </li>
             <li><strong>Vote Count:</strong> {{ movie.vote_count }}</li>
           </ul>
         </div>

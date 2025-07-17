@@ -1,49 +1,46 @@
-
 <template>
   <div>
     <section class="p-6 dark:bg-black/80 bg-white text-gray-400">
-      
       <!-- Kategori düğmeleri -->
       <div class="flex flex-wrap justify-center mb-6 gap-x-2 gap-y-3">
         <button
           v-for="cat in categories"
           :key="cat.key"
-          @click="selectCategory(cat.key)"
           :data-cy="`category-${cat.key}`"
           :class="[
             'px-2 py-1 text-xs',
             'sm:px-3 sm:text-sm',
             'md:px-4 md:text-base',
             'font-bold transition',
-            
+
             cat.key === selectedCategory
               ? 'border-b-2 border-indigo-300 text-gray-400'
-              : 'text-black/70 hover:bg-white/10'
+              : 'text-black/70 hover:bg-white/10',
           ]"
+          @click="selectCategory(cat.key)"
         >
           {{ cat.label }}
         </button>
       </div>
-      
+
       <!-- Film Kartları -->
       <div
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6
-               gap-x-2 gap-y-6 mx-auto max-w-screen-xl"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-6 mx-auto max-w-screen-xl"
       >
         <MoviePageCard
           v-for="movie in allMovies"
           :key="movie.id"
           :movie="movie"
           :imj="`${config.public.imageBaseUrl}/w500${movie.poster_path}`"
-          @play="openTrailer"
           :data-cy="'movie-card'"
+          @play="openTrailer"
         />
       </div>
 
       <!-- Fragman modalı -->
       <VideoModal
         :shoow="showPlayer"
-        :videoKey="trailerKey"
+        :video-key="trailerKey"
         @close="showPlayer = false"
       />
     </section>
@@ -66,10 +63,10 @@ const showPlayer = ref(false)
 const trailerKey = ref('')
 const selectedCategory = ref('popular')
 const categories = [
-  { key: 'popular',  endpoint: 'movie/popular', label: 'MOST POPULAR' },
+  { key: 'popular', endpoint: 'movie/popular', label: 'MOST POPULAR' },
   { key: 'topRated', endpoint: 'movie/top_rated', label: 'TOP RATED' },
   { key: 'upcoming', endpoint: 'movie/upcoming', label: 'UPCOMING' },
-  { key: 'trending', endpoint: 'trending/movie/week', label: 'BEST TRENDING '}
+  { key: 'trending', endpoint: 'trending/movie/week', label: 'BEST TRENDING ' },
 ]
 
 /* Sayfa sayısı, kaç sayfa çekilecek */
@@ -77,7 +74,7 @@ const pagesToLoad = 10
 
 async function fetchMultiplePages(key: string, pagesCount = pagesToLoad) {
   const cat = categories.find(c => c.key === key)!
-  
+
   // sayfa sayısı kadar istek yap
   const promises = []
   for (let i = 1; i <= pagesCount; i++) {
@@ -92,10 +89,10 @@ async function fetchMultiplePages(key: string, pagesCount = pagesToLoad) {
 }
 
 /* --- filmleri çek --- */
-//onMounted(async () => {
- // const responses = await Promise.all(categories.map(c => fetchMovies(c.endpoint)))
- // responses.forEach((data, i) => { movie_page.value[categories[i].key] = data })
-//})
+// onMounted(async () => {
+// const responses = await Promise.all(categories.map(c => fetchMovies(c.endpoint)))
+// responses.forEach((data, i) => { movie_page.value[categories[i].key] = data })
+// })
 
 onMounted(() => {
   fetchMultiplePages(selectedCategory.value)
@@ -120,8 +117,8 @@ async function openTrailer(movieId: number) {
   }
 
   if (!trailer?.key) {
-  console.warn('Video key bulunamadı')
-}
+    console.warn('Video key bulunamadı')
+  }
 }
 
 async function selectCategory(key: string) {
@@ -131,16 +128,3 @@ async function selectCategory(key: string) {
   }
 }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
